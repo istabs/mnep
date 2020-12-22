@@ -64,7 +64,7 @@
 	}
 
 	function readFirebase() {
-		const qryPath = "/sources/mnepmo-ap/credentials";
+		const qryPath = "/sources/mnepmo-at/credentials";
 		console.log(qryPath);
 		var dbRef = firebase.database().ref(qryPath);
 		dbRef.once('value', snap => {
