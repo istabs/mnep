@@ -48,13 +48,9 @@
 			document.getElementById('photo').style.display = 'none';
 			document.getElementById('user-id').style.display = 'none';
 		}
-		if (user) {
-			console.log(user);
-		}
 	};
 
 	var handleSignedOutUser = function () {
-		console.log('in handleSignedOutUser');
 		document.getElementById('photo').style.display = 'none';
 		document.getElementById('user-id').style.display = 'none';
 		window.open('.', '_self');
