@@ -68,11 +68,13 @@
 	}
 
 	function readFirebase() {
-		var dbRef = firebase.database().ref("/mne-pmo");
+		const qryPath = "/sources/mnepmo-ap/credentials";
+		console.log(qryPath);
+		var dbRef = firebase.database().ref(qryPath);
 		dbRef.once('value', snap => {
 			firebaseRead = true;
-			authorization = snap.child('data').child('authorization').val();
-			projectKey = snap.child('data').child('projectKey').val();
+			authorization = snap.child('authorization').val();
+			projectKey = snap.child('projectKey').val();
 			console.log(authorization);
 			console.log(projectKey);
 		});
