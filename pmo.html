@@ -68,12 +68,24 @@
 			});
 	}
 
+	function readFirebase() {
+		var dbRef = firebase.database().ref("/mne-pmo");
+		dbRef.once('value', snap => {
+			firebaseRead = true;
+			authorization = snap.child('data').child('authorization').val();
+			projectKey = snap.child('data').child('projectKey').val();
+			console.log(authorization);
+			console.log(projectKey);
+		});
+	}
+
 	function initApp() {
 		firebase.auth().onAuthStateChanged(function (user) {
 			user ? handleSignedInUser(user) : handleSignedOutUser();
 		}, function (error) {
 			console.log(error);
 		});
+		readFirebase();
 	};
 
 	$(document).ready(() => initApp());
