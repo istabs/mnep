@@ -45,10 +45,10 @@
 				snap.forEach(record => {
 					let name = record.val();
 					projects.push(record.val())
-					this.qryPath = "/sources/" + record.val();
+					this.qryPath = "/sources/projects/" + record.val();
 					this.dbRef = firebase.database().ref(this.qryPath);
+					console.log(user.email);
 					this.dbRef.once('value').then(snap => {
-						console.log(user.email);
 						console.log(snap.name);
 					})
 				});
