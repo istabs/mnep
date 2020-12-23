@@ -55,9 +55,9 @@
 		this.name = user.name;
 		this.email = user.email;
 		this.key = user.email.replace('.', '%2E');
-		this.qryPath = "/sources/users/catalog/" + key;
-		this.dbRef = firebase.database().ref(qryPath);
-		this.onProjects = function(callback) {
+		this.qryPath = "/sources/users/catalog/" + this.key;
+		this.dbRef = firebase.database().ref(this.qryPath);
+		this.onProjects = callback => {
 			dbRef.once('value').then(snap => {
 				let projects = [];
 				snap.forEach(record => {
@@ -72,7 +72,7 @@
 	var handleSignedInUser = function (user) {
 		console.log("user signed-in");
 		console.log('email: ' + firebase.auth().currentUser.email);
-		
+
 		let mngdUser = new MngdUser(user);
 		mngdUser.onProjects(projects => console.log(projects));
 
