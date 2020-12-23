@@ -68,6 +68,7 @@
 		console.log(qryPath);
 		var dbRef = firebase.database().ref(qryPath);
 		dbRef.once('value', snap => {
+			console.log(snap);
 			firebaseRead = true;
 			for (record in snap) {
 				let name = snap.child('$project').child('name').val();
