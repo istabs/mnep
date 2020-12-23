@@ -41,12 +41,13 @@
 		var dbRef = firebase.database().ref(qryPath);
 		dbRef.once('value')
 			.then(snap => {
-				console.log(snap);
+				let projects = [];
 				firebaseRead = true;
 				snap.forEach(record => {
 					let name = record.val();
-					console.log(name);
+					projects.push(record.val())
 				});
+				console.log(projects);
 			});
 	}
 
