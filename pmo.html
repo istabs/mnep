@@ -49,7 +49,7 @@
 					this.dbRef = firebase.database().ref(this.qryPath);
 					console.log(user.email);
 					this.dbRef.once('value').then(snap => {
-						console.log(snap.name);
+						console.log(snap.child('name').val());
 					})
 				});
 				callback(projects);
