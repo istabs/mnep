@@ -67,14 +67,15 @@
 		const qryPath = "/sources";
 		console.log(qryPath);
 		var dbRef = firebase.database().ref(qryPath);
-		dbRef.once('value', snap => {
-			console.log(snap);
-			firebaseRead = true;
-			for (record in snap) {
-				let name = snap.child('$project').child('name').val();
-				console.log(name);
-			}
-		});
+		dbRef.once('value')
+			.then(snap => {
+				console.log(snap);
+				firebaseRead = true;
+				snap.forEach(record => {
+					let name = record.val().child('name').val();
+					console.log(name);
+				});
+			});
 	}
 
 	function initApp() {
