@@ -64,15 +64,15 @@
 	}
 
 	function readFirebase() {
-		const qryPath = "/sources/mnepmo-at/credentials";
+		const qryPath = "/sources";
 		console.log(qryPath);
 		var dbRef = firebase.database().ref(qryPath);
 		dbRef.once('value', snap => {
 			firebaseRead = true;
-			authorization = snap.child('authorization').val();
-			projectKey = snap.child('projectKey').val();
-			console.log(authorization);
-			console.log(projectKey);
+			for (record in snap) {
+				let name = snap.child('$project').child('name').val();
+				console.log(name);
+			}
 		});
 	}
 
