@@ -64,7 +64,8 @@
 	}
 
 	function readFirebase() {
-		const qryPath = "/sources";
+		console.log(firebase.auth().currentUser);
+		const qryPath = "/sources/users";
 		console.log(qryPath);
 		var dbRef = firebase.database().ref(qryPath);
 		dbRef.once('value')
