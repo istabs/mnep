@@ -35,7 +35,7 @@
 <script type="text/javascript">
 
 	function readFirebase() {
-		const qryPath = "/sources/users";
+		const qryPath = "/sources/users/catalog";
 		console.log(qryPath);
 		var dbRef = firebase.database().ref(qryPath);
 		dbRef.once('value')
