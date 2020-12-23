@@ -53,6 +53,7 @@
 	}
 
 	function completeMenu(projects, dropdownTag) {
+		let links = "";
 		projects.forEach(item => {
 			links += "<a class='dropdown-item' href='#' onclick=\"fromMenu('" + item + "')\" href=\"#\">" +
 				item + "</a>"
