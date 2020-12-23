@@ -43,7 +43,7 @@
 				console.log(snap);
 				firebaseRead = true;
 				snap.forEach(record => {
-					let name = record.child('name').val();
+					let name = record.key;
 					console.log(name);
 				});
 			});
@@ -53,7 +53,7 @@
 		console.log("user signed-in");
 		console.log('email: ' + firebase.auth().currentUser.email);
 		readFirebase();
-		
+
 		document.getElementById('user-id').style.display = 'block';
 		document.getElementById('user-id').textContent = user.displayName;
 		if (user.photoURL) {
