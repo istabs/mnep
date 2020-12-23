@@ -51,10 +51,30 @@
 			});
 	}
 
+	function MngdUser(user) {
+		this.name = user.name;
+		this.email = user.email;
+		this.key = user.email.replace('.', '%2E');
+		this.qryPath = "/sources/users/catalog/" + key;
+		this.dbRef = firebase.database().ref(qryPath);
+		this.onProjects = function(callback) {
+			dbRef.once('value').then(snap => {
+				let projects = [];
+				snap.forEach(record => {
+					let name = record.val();
+					projects.push(record.val())
+				});
+				callback(projects);
+			});
+		}
+	}
+
 	var handleSignedInUser = function (user) {
 		console.log("user signed-in");
 		console.log('email: ' + firebase.auth().currentUser.email);
-		readFirebase(user);
+		
+		let mngdUser = new MngdUser(user);
+		mngdUser.onProjects(projects => console.log(projects));
 
 		document.getElementById('user-id').style.display = 'block';
 		document.getElementById('user-id').textContent = user.displayName;
