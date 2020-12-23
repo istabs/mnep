@@ -34,8 +34,9 @@
 
 <script type="text/javascript">
 
-	function readFirebase() {
-		const qryPath = "/sources/users/catalog";
+	function readFirebase(user) {
+		let key = user.email.replace('.', '%2E');
+		const qryPath = "/sources/users/catalog/" + key;
 		console.log(qryPath);
 		var dbRef = firebase.database().ref(qryPath);
 		dbRef.once('value')
@@ -43,7 +44,7 @@
 				console.log(snap);
 				firebaseRead = true;
 				snap.forEach(record => {
-					let name = record.key;
+					let name = record.val();
 					console.log(name);
 				});
 			});
@@ -52,7 +53,7 @@
 	var handleSignedInUser = function (user) {
 		console.log("user signed-in");
 		console.log('email: ' + firebase.auth().currentUser.email);
-		readFirebase();
+		readFirebase(user);
 
 		document.getElementById('user-id').style.display = 'block';
 		document.getElementById('user-id').textContent = user.displayName;
