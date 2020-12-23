@@ -33,7 +33,6 @@
 </script>
 
 <script type="text/javascript">
-
 	function MngdUser(user) {
 		this.name = user.name;
 		this.email = user.email;
@@ -46,6 +45,11 @@
 				snap.forEach(record => {
 					let name = record.val();
 					projects.push(record.val())
+					this.qryPath = "/sources/" + record;
+					this.dbRef = firebase.database().ref(this.qryPath);
+					this.dbRef.once('value').then(snap => {
+						console.log(snap.name);
+					})
 				});
 				callback(projects);
 			});
@@ -57,7 +61,6 @@
 		projects.forEach(item => {
 			links += "<a class='dropdown-item' href='#' onclick=\"fromMenu('" + item + "')\" href=\"#\">" +
 				item + "</a>"
-
 		});
 		document.getElementById(dropdownTag).innerHTML = links
 	}
