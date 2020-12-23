@@ -43,6 +43,7 @@
 			this.dbRef.once('value').then(snap => {
 				let projects = [];
 				snap.forEach(record => {
+					console.log(user.email);
 					let name = record.val();
 					projects.push(record.val())
 					this.qryPath = "/sources/" + record.val();
