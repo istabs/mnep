@@ -58,7 +58,7 @@
 		this.qryPath = "/sources/users/catalog/" + this.key;
 		this.dbRef = firebase.database().ref(this.qryPath);
 		this.onProjects = callback => {
-			dbRef.once('value').then(snap => {
+			this.dbRef.once('value').then(snap => {
 				let projects = [];
 				snap.forEach(record => {
 					let name = record.val();
