@@ -35,6 +35,7 @@
 <script type="text/javascript">
 	var handleSignedInUser = function (user) {
 		console.log("user signed-in");
+		console.log(firebase.auth().currentUser);
 		document.getElementById('user-id').style.display = 'block';
 		document.getElementById('user-id').textContent = user.displayName;
 		if (user.photoURL) {
