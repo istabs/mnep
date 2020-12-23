@@ -34,23 +34,6 @@
 
 <script type="text/javascript">
 
-	function readFirebase(user) {
-		let key = user.email.replace('.', '%2E');
-		const qryPath = "/sources/users/catalog/" + key;
-		console.log(qryPath);
-		var dbRef = firebase.database().ref(qryPath);
-		dbRef.once('value')
-			.then(snap => {
-				let projects = [];
-				firebaseRead = true;
-				snap.forEach(record => {
-					let name = record.val();
-					projects.push(record.val())
-				});
-				console.log(projects);
-			});
-	}
-
 	function MngdUser(user) {
 		this.name = user.name;
 		this.email = user.email;
@@ -69,12 +52,18 @@
 		}
 	}
 
-	var handleSignedInUser = function (user) {
-		console.log("user signed-in");
-		console.log('email: ' + firebase.auth().currentUser.email);
+	function completeMenu(projects, dropdownTag) {
+		projects.forEach(item => {
+			links += "<a class='dropdown-item' href='#' onclick=\"fromMenu('" + item + "')\" href=\"#\">" +
+				item + "</a>"
 
+		});
+		document.getElementById(dropdownTag).innerHTML = links
+	}
+
+	var handleSignedInUser = function (user) {
 		let mngdUser = new MngdUser(user);
-		mngdUser.onProjects(projects => console.log(projects));
+		mngdUser.onProjects(projects => completeMenu(projects, 'ganttCharts'));
 
 		document.getElementById('user-id').style.display = 'block';
 		document.getElementById('user-id').textContent = user.displayName;
@@ -122,6 +111,14 @@
 	<div id="top_menu">
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<a class="navbar-brand" href=".">MNE PMO</a>
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+						Gantts
+					</a>
+					<div id="ganttCharts" class="dropdown-menu"></div>
+				</li>
+			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
 					<img id="photo" class="nav-link rounded-circle" src="img/sq-black40.jpg">
