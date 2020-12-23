@@ -34,6 +34,7 @@
 
 <script type="text/javascript">
 	var handleSignedInUser = function (user) {
+		console.log("user signed-in");
 		document.getElementById('user-id').style.display = 'block';
 		document.getElementById('user-id').textContent = user.displayName;
 		if (user.photoURL) {
@@ -51,6 +52,7 @@
 	};
 
 	var handleSignedOutUser = function () {
+		console.log("user signed-out");
 		document.getElementById('photo').style.display = 'none';
 		document.getElementById('user-id').style.display = 'none';
 		window.open('.', '_self');
