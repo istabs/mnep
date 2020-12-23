@@ -33,9 +33,27 @@
 </script>
 
 <script type="text/javascript">
+
+	function readFirebase() {
+		const qryPath = "/sources/users";
+		console.log(qryPath);
+		var dbRef = firebase.database().ref(qryPath);
+		dbRef.once('value')
+			.then(snap => {
+				console.log(snap);
+				firebaseRead = true;
+				snap.forEach(record => {
+					let name = record.child('name').val();
+					console.log(name);
+				});
+			});
+	}
+
 	var handleSignedInUser = function (user) {
 		console.log("user signed-in");
 		console.log('email: ' + firebase.auth().currentUser.email);
+		readFirebase();
+		
 		document.getElementById('user-id').style.display = 'block';
 		document.getElementById('user-id').textContent = user.displayName;
 		if (user.photoURL) {
@@ -66,28 +84,12 @@
 			});
 	}
 
-	function readFirebase() {
-		const qryPath = "/sources/users";
-		console.log(qryPath);
-		var dbRef = firebase.database().ref(qryPath);
-		dbRef.once('value')
-			.then(snap => {
-				console.log(snap);
-				firebaseRead = true;
-				snap.forEach(record => {
-					let name = record.child('name').val();
-					console.log(name);
-				});
-			});
-	}
-
 	function initApp() {
 		firebase.auth().onAuthStateChanged(function (user) {
 			user ? handleSignedInUser(user) : handleSignedOutUser();
 		}, function (error) {
 			console.log(error);
 		});
-		readFirebase();
 	};
 
 	$(document).ready(() => initApp());
