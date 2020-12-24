@@ -68,11 +68,11 @@
 				});
 			});
 		}
-		this.onMenu = async function (callback) {
+		this.onMenu = function (callback) {
 			this.menuPath = this.basePath + this.key + "/list";
 			let dbRef1 = firebase.database().ref(this.menuPath);
 			let projectsLst = [];
-			await dbRef1.once('value').then(snap => {
+			dbRef1.once('value').then(snap => {
 				snap.forEach(record => {
 					this.menuPath = "/sources/projects/" + record.val();
 					dbRef2 = firebase.database().ref(this.menuPath);
@@ -80,10 +80,9 @@
 						let project = new Project(snap);
 						projects[project.name] = project;
 						projectsLst.push(project)
-					});
+					}).then(()=>callback(projectsLst));
 				});
 			});
-			callback(projectsLst);
 		}
 	}
 
