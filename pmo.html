@@ -68,19 +68,19 @@
 				});
 			});
 		}
-		this.onMenu = callback => {
+		this.onMenu = async callback => {
 			this.menuPath = this.basePath + this.key + "/list";
 			let dbRef1 = firebase.database().ref(this.menuPath);
 			dbRef1.once('value').then(snap => {
 				let projectsLst = [];
-				snap.forEach(record => {
+				await snap.forEach(record => {
 					this.menuPath = "/sources/projects/" + record.val();
 					dbRef2 = firebase.database().ref(this.menuPath);
 					dbRef2.once('value').then(snap => {
 						let project = new Project(snap);
 						projects[project.name] = project;
 						projectsLst.push(project)
-					})
+					});
 				});
 				callback(projectsLst);
 			});
