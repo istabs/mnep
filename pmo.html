@@ -96,7 +96,7 @@
 		let dropdownLinks = "";
 		projectsLst.forEach(project => {
 			let prjName = project.name;
-			dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"fillChart('" + project.name + ","
+			dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"fillChart('" + project.name + "','"
 			+ chartPlaceholder + "')\" href=\"#\">" + project.name + "</a>"
 		});
 		document.getElementById(dropdownTag).innerHTML = dropdownLinks
