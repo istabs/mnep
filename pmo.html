@@ -55,6 +55,7 @@
 		this.email = user.email;
 		this.key = user.email.replace(new RegExp('\\.','g'), '%2E');
 		this.basePath = "/sources/users/catalog/";
+
 		this.onDefault = callback => {
 			let defaultPath = this.basePath + this.key + "/default";
 			let dbRef1 = firebase.database().ref(defaultPath);
@@ -68,6 +69,7 @@
 				});
 			});
 		}
+
 		this.onMenu = function (callback) {
 			this.menuPath = this.basePath + this.key + "/list";
 			let dbRef1 = firebase.database().ref(this.menuPath);
@@ -86,10 +88,19 @@
 		}
 	}
 
-	function fillChart(project, chartPlaceholder) {
+	function airtables1(project, chartPlaceholder) {
 		document.getElementById(chartPlaceholder).innerHTML = projects[project].name;
 		console.log(project);
 		console.log(projects[project]);
+	}
+
+	const parsers = {
+		["AirTables", "airtables1"]: airtables1,
+	}
+
+	function fillChart(project, chartPlaceholder) {
+		if (parsers.has([project.pattern, project.maptype]))
+			parsers[[project.pattern, project.maptype]](project, chartPlaceholder);
 	}
 
 	function completeMenu(projectsLst, chartPlaceholder, dropdownTag) {
