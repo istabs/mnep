@@ -100,7 +100,7 @@
 
 	function fillChart(project, chartPlaceholder) {
 		let key = project.pattern+":"+project.maptype
-		if (parsers.has(key)) {
+		if (parsers.hasOwnProperty(key)) {
 			parsers[key](project, chartPlaceholder);
 		}
 	}
