@@ -93,12 +93,12 @@
 	}
 
 	function completeMenu(projects, chartPlaceholder, dropdownTag) {
-		let links = "";
-		projects.forEach(item => {
-			links += "<a class='dropdown-item' href='#' onclick=\"fillChart('" + item.name + "," + chartPlaceholder + "')\" href=\"#\">" +
-				item.name + "</a>"
+		let dropdownLinks = "";
+		projects.forEach(project => {
+			dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"fillChart('" + project.name + ","
+			+ chartPlaceholder + "')\" href=\"#\">" + project.name + "</a>"
 		});
-		document.getElementById(dropdownTag).innerHTML = links
+		document.getElementById(dropdownTag).innerHTML = dropdownLinks
 	}
 
 	var handleSignedInUser = function (user) {
