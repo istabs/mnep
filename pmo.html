@@ -76,9 +76,8 @@
 					dbRef2.once('value').then(snap => {
 						let project = new Project(snap);
 						projects.push(project)
-					}).then(()=>console.log(projects))
+					}).then(()=>callback(projects))
 				});
-				callback(projects);
 			});
 		}
 	}
