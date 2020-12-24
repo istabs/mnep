@@ -95,7 +95,7 @@
 	function completeMenu(projectsLst, chartPlaceholder, dropdownTag) {
 		let dropdownLinks = "";
 		projectsLst.forEach(project => {
-			let prjName = projects[project].name;
+			let prjName = project.name;
 			dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"fillChart('" + projects[project].name + ","
 			+ chartPlaceholder + "')\" href=\"#\">" + project.name + "</a>"
 		});
