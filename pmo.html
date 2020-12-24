@@ -86,24 +86,19 @@
 		}
 	}
 
-	function fromMenu(item) {
-		console.log(projects[item].name);
-		console.log(projects[item]);
-	}
-
-	function completeMenu(projects, dropdownTag) {
-		let links = "";
-		projects.forEach(item => {
-			links += "<a class='dropdown-item' href='#' onclick=\"fromMenu('" + item.name + "')\" href=\"#\">" +
-				item.name + "</a>"
-		});
-		document.getElementById(dropdownTag).innerHTML = links
-	}
-
 	function fillChart(project, chartPlaceholder) {
 		document.getElementById(chartPlaceholder).innerHTML = projects[project].name;
 		console.log(project);
 		console.log(projects[project]);
+	}
+
+	function completeMenu(projects, chartPlaceholder, dropdownTag) {
+		let links = "";
+		projects.forEach(item => {
+			links += "<a class='dropdown-item' href='#' onclick=\"fillChart('" + item.name + "," + chartPlaceholder + "')\" href=\"#\">" +
+				item.name + "</a>"
+		});
+		document.getElementById(dropdownTag).innerHTML = links
 	}
 
 	var handleSignedInUser = function (user) {
@@ -125,7 +120,7 @@
 		// Dynamic fulfilment
 		let mngdUser = new MngdUser(user);
 		mngdUser.onDefault(project => fillChart(project, 'chart'));
-		mngdUser.onMenu(projects => completeMenu(projects, 'ganttCharts'));
+		mngdUser.onMenu(projects => completeMenu(projects, 'chart', 'ganttCharts'));
 	};
 
 	var handleSignedOutUser = function () {
