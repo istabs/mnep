@@ -37,39 +37,57 @@
 		this.name = user.name;
 		this.email = user.email;
 		this.key = user.email.replace('.', '%2E');
-		this.qryPath = "/sources/users/catalog/" + this.key;
-		this.dbRef = firebase.database().ref(this.qryPath);
-		this.onProjects = callback => {
+		this.basePath = "/sources/users/catalog/";
+		this.defaultPath = basePath + this.key + "/default";
+		this.menuPath = basePath + this.key + "/list";
+		this.onDefault = callback => {
+			let dbRef1 = firebase.database().ref(this.defaultPath);
+			dbRef1.once('value').then(snap => {
+				let defaultTag = snap.child('default').val();
+				let defaultPrjPath = "/sources/projects/" + defaultTag;
+				let dbRef2 = firebase.database().ref(defaultPrjPath);
+				dbRef2.once('value').then(snap => {
+					let prjName = snap.child('name').val();
+					callback(prjName);
+				});
+			});
+		}
+		this.onMenu = callback => {
+			this.dbRef = firebase.database().ref(this.menuPath);
 			this.dbRef.once('value').then(snap => {
 				let projects = [];
 				snap.forEach(record => {
 					let name = record.val();
-					this.qryPath = "/sources/projects/" + record.val();
-					this.dbRef = firebase.database().ref(this.qryPath);
+					this.menuPath = "/sources/projects/" + record.val();
+					this.dbRef = firebase.database().ref(this.menuPath);
 					this.dbRef.once('value').then(snap => {
 						let name = snap.child('name').val();
 						projects.push(name)
 						//console.log(name);
 					}).then(()=>console.log(projects))
 				});
-				callback(projects);
+				callback(projects, defaultPrj);
 			});
 		}
 	}
 
-	function completeMenu(projects, dropdownTag) {
+	function completeMenu(projects, defaultPrj, dropdownTag) {
 		let links = "";
 		projects.forEach(item => {
 			links += "<a class='dropdown-item' href='#' onclick=\"fromMenu('" + item + "')\" href=\"#\">" +
 				item + "</a>"
 		});
 		document.getElementById(dropdownTag).innerHTML = links
+		console.log(defaultPrj);
+	}
+
+	function fillChart(projectName, chartPlaceholder) {
+		document.getElementById(chartPlaceholder).innerHTML = projectName
+		console.log(projectName);
 	}
 
 	var handleSignedInUser = function (user) {
-		let mngdUser = new MngdUser(user);
-		mngdUser.onProjects(projects => completeMenu(projects, 'ganttCharts'));
-
+		// Adjust menu bar
 		document.getElementById('user-id').style.display = 'block';
 		document.getElementById('user-id').textContent = user.displayName;
 		if (user.photoURL) {
@@ -84,6 +102,10 @@
 			document.getElementById('photo').style.display = 'none';
 			document.getElementById('user-id').style.display = 'none';
 		}
+		// Dynamic fulfilment
+		let mngdUser = new MngdUser(user);
+		mngdUser.onDefault(project => fillChart(project, 'chart'));
+		mngdUser.onMenu((projects, defaultPrj) => completeMenu(projects, defaultPrj, 'ganttCharts'));
 	};
 
 	var handleSignedOutUser = function () {
