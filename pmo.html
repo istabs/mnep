@@ -36,6 +36,14 @@
 
 	function Project(snap) {
 		this.name = snap.child('name').val();
+		this.authorization = snap.child('credentials').child('authorization').val();
+		this.key = snap.child('credentials').child('key').val();
+		this.table = snap.child('details').child('table').val();
+		this.label = snap.child('details').child('mapping').child('label').val();
+		this.start = snap.child('details').child('mapping').child('start').val();
+		this.end = snap.child('details').child('mapping').child('end').val();
+		this.group = snap.child('details').child('mapping').child('group').val();
+		this.parent = snap.child('details').child('mapping').child('parent').val();
 	}
 
 	function MngdUser(user) {
