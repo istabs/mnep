@@ -55,7 +55,6 @@
 			let defaultPath = this.basePath + this.key + "/default";
 			let dbRef1 = firebase.database().ref(defaultPath);
 			dbRef1.once('value').then(snap => {
-				console.log(user.email);
 				let defaultTag = snap.val();
 				let defaultPrjPath = "/sources/projects/" + defaultTag;
 				let dbRef2 = firebase.database().ref(defaultPrjPath);
@@ -119,7 +118,6 @@
 	};
 
 	var handleSignedOutUser = function () {
-		console.log("user signed-out");
 		document.getElementById('photo').style.display = 'none';
 		document.getElementById('user-id').style.display = 'none';
 		window.open('.', '_self');
