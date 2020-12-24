@@ -89,9 +89,8 @@
 	}
 
 	function airtables1(project, chartPlaceholder) {
-		document.getElementById(chartPlaceholder).innerHTML = projects[project].name;
+		document.getElementById(chartPlaceholder).innerHTML = project.name;
 		console.log(project);
-		console.log(projects[project]);
 	}
 
 	const parsers = {
