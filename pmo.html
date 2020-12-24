@@ -38,12 +38,12 @@
 		this.email = user.email;
 		this.key = user.email.replace('.', '%2E');
 		this.basePath = "/sources/users/catalog/";
-		this.defaultPath = this.basePath + this.key + "/default";
-		this.menuPath = this.basePath + this.key + "/list";
 		this.onDefault = callback => {
-			let dbRef1 = firebase.database().ref(this.defaultPath);
+			let defaultPath = this.basePath + this.key + "/default";
+			let dbRef1 = firebase.database().ref(defaultPath);
 			dbRef1.once('value').then(snap => {
-				let defaultTag = snap.child('default').val();
+				console.log(user.email);
+				let defaultTag = snap.val();
 				let defaultPrjPath = "/sources/projects/" + defaultTag;
 				let dbRef2 = firebase.database().ref(defaultPrjPath);
 				dbRef2.once('value').then(snap => {
@@ -53,14 +53,15 @@
 			});
 		}
 		this.onMenu = callback => {
-			this.dbRef = firebase.database().ref(this.menuPath);
-			this.dbRef.once('value').then(snap => {
+			this.menuPath = this.basePath + this.key + "/list";
+			let dbRef1 = firebase.database().ref(this.menuPath);
+			dbRef1.once('value').then(snap => {
 				let projects = [];
 				snap.forEach(record => {
 					let name = record.val();
 					this.menuPath = "/sources/projects/" + record.val();
-					this.dbRef = firebase.database().ref(this.menuPath);
-					this.dbRef.once('value').then(snap => {
+					dbRef2 = firebase.database().ref(this.menuPath);
+					dbRef2.once('value').then(snap => {
 						let name = snap.child('name').val();
 						projects.push(name)
 						//console.log(name);
