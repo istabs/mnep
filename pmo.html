@@ -33,6 +33,11 @@
 </script>
 
 <script type="text/javascript">
+
+	function Project(snap) {
+		this.name = snap.child('name').val();
+	}
+
 	function MngdUser(user) {
 		this.name = user.name;
 		this.email = user.email;
@@ -58,13 +63,11 @@
 			dbRef1.once('value').then(snap => {
 				let projects = [];
 				snap.forEach(record => {
-					let name = record.val();
 					this.menuPath = "/sources/projects/" + record.val();
 					dbRef2 = firebase.database().ref(this.menuPath);
 					dbRef2.once('value').then(snap => {
-						let name = snap.child('name').val();
-						projects.push(name)
-						//console.log(name);
+						let project = new Project(snap);
+						projects.push(project)
 					}).then(()=>console.log(projects))
 				});
 				callback(projects);
@@ -75,8 +78,8 @@
 	function completeMenu(projects, dropdownTag) {
 		let links = "";
 		projects.forEach(item => {
-			links += "<a class='dropdown-item' href='#' onclick=\"fromMenu('" + item + "')\" href=\"#\">" +
-				item + "</a>"
+			links += "<a class='dropdown-item' href='#' onclick=\"fromMenu('" + item.name + "')\" href=\"#\">" +
+				item.name + "</a>"
 		});
 		document.getElementById(dropdownTag).innerHTML = links
 	}
