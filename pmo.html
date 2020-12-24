@@ -99,9 +99,10 @@
 	}
 
 	function fillChart(project, chartPlaceholder) {
-		let key = project.pattern+":"+project.maptype
+		let prjObj = projects[project];
+		let key = prjObj.pattern+":"+prjObj.maptype
 		if (parsers.hasOwnProperty(key)) {
-			parsers[key](project, chartPlaceholder);
+			parsers[key](prjObj, chartPlaceholder);
 		}
 	}
 
