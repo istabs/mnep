@@ -95,12 +95,14 @@
 	}
 
 	const parsers = {
-		["AirTables", "airtables1"]: airtables1,
+		"AirTables:airtables1": airtables1,
 	}
 
 	function fillChart(project, chartPlaceholder) {
-		if (parsers.has([project.pattern, project.maptype]))
-			parsers[[project.pattern, project.maptype]](project, chartPlaceholder);
+		let key = project.pattern+":"+project.maptype
+		if (parsers.has(key)) {
+			parsers[key](project, chartPlaceholder);
+		}
 	}
 
 	function completeMenu(projectsLst, chartPlaceholder, dropdownTag) {
