@@ -49,7 +49,7 @@
 	function MngdUser(user) {
 		this.name = user.name;
 		this.email = user.email;
-		this.key = user.email.replace(new RegExp('\.','g'), '%2E');
+		this.key = user.email.replace(new RegExp('.','g'), '%2E');
 		this.basePath = "/sources/users/catalog/";
 		this.onDefault = callback => {
 			let defaultPath = this.basePath + this.key + "/default";
