@@ -68,7 +68,7 @@
 				});
 			});
 		}
-		this.onMenu = async callback => {
+		this.onMenu = async function (callback) {
 			this.menuPath = this.basePath + this.key + "/list";
 			let dbRef1 = firebase.database().ref(this.menuPath);
 			dbRef1.once('value').then(snap => {
