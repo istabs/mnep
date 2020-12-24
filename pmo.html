@@ -80,8 +80,8 @@
 						let project = new Project(snap);
 						projects[project.name] = project;
 						projectsLst.push(project)
-					}).then(()=>callback(projectsLst))
-				});
+					})
+				}).then(()=>callback(projectsLst));
 			});
 		}
 	}
