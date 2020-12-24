@@ -66,12 +66,12 @@
 						//console.log(name);
 					}).then(()=>console.log(projects))
 				});
-				callback(projects, defaultPrj);
+				callback(projects);
 			});
 		}
 	}
 
-	function completeMenu(projects, defaultPrj, dropdownTag) {
+	function completeMenu(projects, dropdownTag) {
 		let links = "";
 		projects.forEach(item => {
 			links += "<a class='dropdown-item' href='#' onclick=\"fromMenu('" + item + "')\" href=\"#\">" +
@@ -105,7 +105,7 @@
 		// Dynamic fulfilment
 		let mngdUser = new MngdUser(user);
 		mngdUser.onDefault(project => fillChart(project, 'chart'));
-		mngdUser.onMenu((projects, defaultPrj) => completeMenu(projects, defaultPrj, 'ganttCharts'));
+		mngdUser.onMenu(projects => completeMenu(projects, 'ganttCharts'));
 	};
 
 	var handleSignedOutUser = function () {
