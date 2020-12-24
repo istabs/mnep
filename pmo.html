@@ -81,7 +81,8 @@
 						projects[project.name] = project;
 						projectsLst.push(project)
 					})
-				}).then(()=>callback(projectsLst));
+				});
+				callback(projectsLst);
 			});
 		}
 	}
