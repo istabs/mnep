@@ -116,7 +116,7 @@
 		console.log(project);
 		let accumulator = [];
 		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
-		readData(url, authorization, accumulator, (accumulator) => {
+		readData(url, project.authorization, accumulator, (accumulator) => {
 			console.log(accumulator);
 		});
 	}
