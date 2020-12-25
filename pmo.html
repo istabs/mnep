@@ -88,27 +88,19 @@
 		}
 	}
 
-	function readData(url, authorization, accumulator, callback) {
+	function readAirtablesData(url, authorization, accumulator, callback) {
 		$.ajax({
 			url: url,
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader("Authorization", authorization)
-			},
-			success: function (rawData) {
-				console.log(rawData)
-				console.log('......')
-
-				rawData.records.forEach((record) => {
-					accumulator.push(record)
-				})
-
+			beforeSend: (xhr) => xhr.setRequestHeader("Authorization", authorization),
+			success: (rawData) => {
+				rawData.records.forEach((record) => accumulator.push(record))
 				if (rawData.offset) {
-					readData(url + '?offset=' + rawData.offset, authorization, accumulator, callback)
-				} else {
-					callback(accumulator);
+					readAirtablesData(url + '?offset=' + rawData.offset, authorization, accumulator, callback);
+					return;
 				}
+				callback(accumulator);
 			}
-		})
+		});
 	}
 
 	function airtables1(project, chartPlaceholder) {
@@ -116,7 +108,7 @@
 		console.log(project);
 		let accumulator = [];
 		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
-		readData(url, project.authorization, accumulator, (accumulator) => {
+		readAirtablesData(url, project.authorization, accumulator, (accumulator) => {
 			console.log(accumulator);
 		});
 	}
@@ -128,9 +120,7 @@
 	function fillChart(project, chartPlaceholder) {
 		let prjObj = projects[project];
 		let key = prjObj.pattern+":"+prjObj.maptype
-		if (parsers.hasOwnProperty(key)) {
-			parsers[key](prjObj, chartPlaceholder);
-		}
+		if (parsers.hasOwnProperty(key)) parsers[key](prjObj, chartPlaceholder)
 	}
 
 	function completeMenu(projectsLst, chartPlaceholder, dropdownTag) {
