@@ -1,7 +1,6 @@
 
 function prepareAirtables(project, chartPlaceholder, rawData) {
 	var rows = [];
-	console.log(rawData);
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (item.fields["Sumário"]) {
 			var preds = item.fields.Predecessores ? item.fields.Predecessores[0] : null;
@@ -21,7 +20,6 @@ function prepareAirtables(project, chartPlaceholder, rawData) {
 			}
 		}
 	});
-	console.log(rows);
 	presentGantt(chartPlaceholder,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
 		height: 640, width: 960 }, rawData, rows);
