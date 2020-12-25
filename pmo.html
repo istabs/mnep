@@ -88,17 +88,17 @@
 		}
 	}
 
-	function readAirtablesData(url, authorization, accumulator, callback) {
+	function readAirtablesData(url, authorization, chartPlaceholder, acc, callback) {
 		$.ajax({
 			url: url,
 			beforeSend: (xhr) => xhr.setRequestHeader("Authorization", authorization),
 			success: (rawData) => {
-				rawData.records.forEach((record) => accumulator.push(record))
+				rawData.records.forEach((record) => acc.push(record))
 				if (rawData.offset) {
-					readAirtablesData(url + '?offset=' + rawData.offset, authorization, accumulator, callback);
+					readAirtablesData(url + '?offset=' + rawData.offset, authorization, acc, callback);
 					return;
 				}
-				callback(accumulator);
+				callback(project, chartPlaceholder, acc);
 			}
 		});
 	}
@@ -106,10 +106,13 @@
 	function airtables1(project, chartPlaceholder) {
 		document.getElementById(chartPlaceholder).innerHTML = project.name;
 		console.log(project);
-		let accumulator = [];
 		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
-		readAirtablesData(url, project.authorization, accumulator, (accumulator) => {
-			console.log(accumulator);
+		let rawDataAcc = [];
+		readAirtablesData(url, project.authorization, chartPlaceholder, rawDataAcc,
+		(project, chartPlaceholder, rawData) => {
+			console.log(project);
+			console.log(chartPlaceholder);
+			console.log(rawData);
 		});
 	}
 
@@ -118,9 +121,10 @@
 	}
 
 	function fillChart(project, chartPlaceholder) {
-		let prjObj = projects[project];
-		let key = prjObj.pattern+":"+prjObj.maptype
-		if (parsers.hasOwnProperty(key)) parsers[key](prjObj, chartPlaceholder)
+		let prjDetails = projects[project];
+		let prjType = prjDetails.pattern + ":" + prjDetails.maptype
+		if (parsers.hasOwnProperty(prjType)) parsers[prjType](prjDetails, chartPlaceholder)
+		else console.log(prjType + ' not defined - exiting');
 	}
 
 	function completeMenu(projectsLst, chartPlaceholder, dropdownTag) {
