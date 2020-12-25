@@ -22,6 +22,9 @@ function prepareAirtables(project, chartPlaceholder, rawData) {
 		}
 	});
 	console.log(rows);
+	presentGantt(chartPlaceholder,
+		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
+		height: 640, width: 960 }, rawData, rows);
 }
 
 function airtables1(project, chartPlaceholder) {
