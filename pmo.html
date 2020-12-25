@@ -109,7 +109,6 @@
 		document.getElementById(chartPlaceholder).innerHTML = project.name;
 		console.log(project);
 		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
-		var acc = new Acc(rawData);
 		readAirtablesData(url, project, chartPlaceholder, rawData,
 		(project, chartPlaceholder, rawData) => {
 			console.log(project);
