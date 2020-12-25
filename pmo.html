@@ -103,7 +103,7 @@
 				})
 
 				if (rawData.offset) {
-					readData(url, authorization, accumulator, callback)
+					readData(url + '?offset=' + rawData.offset, authorization, accumulator, callback)
 				} else {
 					callback(accumulator);
 				}
