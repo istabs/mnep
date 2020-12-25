@@ -92,7 +92,7 @@
 		$.ajax({
 			url: url,
 			beforeSend: function (xhr) {
-				xhr.setRequestHeader("Authorization", project.authorization)
+				xhr.setRequestHeader("Authorization", authorization)
 			},
 			success: function (rawData) {
 				console.log(rawData)
