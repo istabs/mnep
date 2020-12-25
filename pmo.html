@@ -88,41 +88,37 @@
 		}
 	}
 
-	function airtables1(project, chartPlaceholder) {
-		document.getElementById(chartPlaceholder).innerHTML = project.name;
-		console.log(project);
-		let entries = [];
-		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
+	function readData(url, authorization, accumulator, callback) {
 		$.ajax({
 			url: url,
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader("Authorization", project.authorization)
 			},
-			success: function (rawData1) {
-				const HTML_POSITION = chartPlaceholder;
-				
-				console.log(rawData1)
+			success: function (rawData) {
+				console.log(rawData)
 				console.log('......')
-				
-				rawData1.records.forEach((record) => {
-					console.log(record)
-					entries.push(record)
+
+				rawData.records.forEach((record) => {
+					accumulator.push(record)
 				})
 
-				var gantt = {
-					sortTasks: true,
-					criticalPathEnabled: false,
-					criticalPathStyle: { strokeWidth: 0, stroke: '#e64a19', },
-					arrow: { width: 0, radius: 10, length: 0, spaceAfter: -275, },
-				};
-				if (target.palette) gantt['palette'] = target.palette;
-
-				var options = {gantt: gantt, height: target.height, width: 960, };
-
-				var presenter = _.partial(presentGantt, HTML_POSITION, options, rawData);
-				google.charts.setOnLoadCallback(() => googleChartAirtableAdapt(rawData, target.adapt, presenter));	
+				if (rawData.offset) {
+					readData(url, authorization, accumulator, callback)
+				} else {
+					callback(accumulator);
+				}
 			}
 		})
+	}
+
+	function airtables1(project, chartPlaceholder) {
+		document.getElementById(chartPlaceholder).innerHTML = project.name;
+		console.log(project);
+		let accumulator = [];
+		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
+		readData(url, authorization, accumulator, (accumulator) => {
+			console.log(accumulator);
+		});
 	}
 
 	const parsers = {
