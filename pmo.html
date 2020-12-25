@@ -95,7 +95,7 @@
 			success: (rawData) => {
 				rawData.records.forEach(record => acc.data.push(record))
 				if (rawData.offset) {
-					readAirtablesData(url + '?offset=' + rawData.offset, project, acc, callback);
+					readAirtablesData(url + '?offset=' + rawData.offset, project, chartPlaceholder, acc, callback);
 					return;
 				}
 				callback(project, chartPlaceholder, acc);
