@@ -93,7 +93,7 @@
 			url: url,
 			beforeSend: (xhr) => xhr.setRequestHeader("Authorization", authorization),
 			success: (rawData) => {
-				rawData.records.forEach(record => acc.push(record))
+				rawData.records.forEach(record => { acc.push(record); })
 				if (rawData.offset) {
 					readAirtablesData(url + '?offset=' + rawData.offset, authorization, acc, callback);
 					return;
