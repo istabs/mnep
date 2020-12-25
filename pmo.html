@@ -107,7 +107,6 @@
 
 	function airtables1(project, chartPlaceholder) {
 		document.getElementById(chartPlaceholder).innerHTML = project.name;
-		console.log(project);
 		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
 		readAirtablesData(url, project, chartPlaceholder, rawData,
 		(project, chartPlaceholder, rawData) => {
@@ -124,7 +123,10 @@
 	function fillChart(project, chartPlaceholder) {
 		let prjDetails = projects[project];
 		let prjType = prjDetails.pattern + ":" + prjDetails.maptype
-		if (parsers.hasOwnProperty(prjType)) parsers[prjType](prjDetails, chartPlaceholder)
+		if (parsers.hasOwnProperty(prjType)) {
+			rawData = [];
+			parsers[prjType](prjDetails, chartPlaceholder);
+		}
 		else console.log(prjType + ' not defined - exiting');
 	}
 
