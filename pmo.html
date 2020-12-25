@@ -93,7 +93,7 @@
 			url: url,
 			beforeSend: (xhr) => xhr.setRequestHeader("Authorization", authorization),
 			success: (rawData) => {
-				rawData.records.forEach((record) => acc.push(record))
+				rawData.records.forEach(record => acc.push(record))
 				if (rawData.offset) {
 					readAirtablesData(url + '?offset=' + rawData.offset, authorization, acc, callback);
 					return;
@@ -103,12 +103,13 @@
 		});
 	}
 
+	var rawData = [];
+
 	function airtables1(project, chartPlaceholder) {
 		document.getElementById(chartPlaceholder).innerHTML = project.name;
 		console.log(project);
 		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
-		let rawDataAcc = [];
-		readAirtablesData(url, project.authorization, chartPlaceholder, rawDataAcc,
+		readAirtablesData(url, project.authorization, chartPlaceholder, rawData,
 		(project, chartPlaceholder, rawData) => {
 			console.log(project);
 			console.log(chartPlaceholder);
