@@ -91,7 +91,7 @@
 	function airtables1(project, chartPlaceholder) {
 		document.getElementById(chartPlaceholder).innerHTML = project.name;
 		console.log(project);
-		let rawData = [];
+		let entries = [];
 		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
 		$.ajax({
 			url: url,
@@ -101,9 +101,12 @@
 			success: function (rawData1) {
 				const HTML_POSITION = chartPlaceholder;
 				
+				console.log(rawData1)
+				console.log('......')
+				
 				rawData1.records.forEach((record) => {
 					console.log(record)
-					rawData.records.push(record)
+					entries.push(record)
 				})
 
 				var gantt = {
