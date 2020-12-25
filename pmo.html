@@ -91,6 +91,35 @@
 	function airtables1(project, chartPlaceholder) {
 		document.getElementById(chartPlaceholder).innerHTML = project.name;
 		console.log(project);
+		let rawData = [];
+		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
+		$.ajax({
+			url: url,
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader("Authorization", project.authorization)
+			},
+			success: function (rawData1) {
+				const HTML_POSITION = chartPlaceholder;
+				
+				rawData1.records.forEach((record) => {
+					console.log(record)
+					rawData.records.push(record)
+				})
+
+				var gantt = {
+					sortTasks: true,
+					criticalPathEnabled: false,
+					criticalPathStyle: { strokeWidth: 0, stroke: '#e64a19', },
+					arrow: { width: 0, radius: 10, length: 0, spaceAfter: -275, },
+				};
+				if (target.palette) gantt['palette'] = target.palette;
+
+				var options = {gantt: gantt, height: target.height, width: 960, };
+
+				var presenter = _.partial(presentGantt, HTML_POSITION, options, rawData);
+				google.charts.setOnLoadCallback(() => googleChartAirtableAdapt(rawData, target.adapt, presenter));	
+			}
+		})
 	}
 
 	const parsers = {
