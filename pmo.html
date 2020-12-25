@@ -88,33 +88,37 @@
 		}
 	}
 
-	function readAirtablesData(url, authorization, chartPlaceholder, accPush, callback) {
+	function readAirtablesData(url, project, chartPlaceholder, acc, callback) {
 		$.ajax({
 			url: url,
-			beforeSend: (xhr) => xhr.setRequestHeader("Authorization", authorization),
+			beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
 			success: (rawData) => {
-				rawData.records.forEach(record => accPush(record))
+				rawData.records.forEach(record => acc.data.push(record))
 				if (rawData.offset) {
-					readAirtablesData(url + '?offset=' + rawData.offset, authorization, accPush, callback);
+					readAirtablesData(url + '?offset=' + rawData.offset, project.authorization, acc, callback);
 					return;
 				}
-				callback(project, chartPlaceholder, accPush);
+				callback(project, chartPlaceholder, acc);
 			}
 		});
 	}
 
 	var rawData = [];
 
+	function Acc(acc) {
+		this.data = acc;
+	};
+
 	function airtables1(project, chartPlaceholder) {
 		document.getElementById(chartPlaceholder).innerHTML = project.name;
 		console.log(project);
 		let url = "https://api.airtable.com/v0/" + project.key + "/" + project.name;
-		readAirtablesData(url, project.authorization, chartPlaceholder,
-		rec => { if (rec) rawData.push(rec); else return rawData; },
-		(project, chartPlaceholder, rawDataPush) => {
+		var acc = new Acc(rawData);
+		readAirtablesData(url, project, chartPlaceholder, acc,
+		(project, chartPlaceholder, accObj) => {
 			console.log(project);
 			console.log(chartPlaceholder);
-			console.log(rawData);
+			console.log(accObj.data);
 		});
 	}
 
