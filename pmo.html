@@ -55,7 +55,7 @@
 		this.progress      = snap.child('details').child('mapping').child('progress').val();
 		this.summary       = snap.child('details').child('mapping').child('summary').val();
 		this.height        = snap.child('details').child('height').val();
-		this.isSummarize   = snap.child('details').child('isSummarize').val();
+		this.isSummarize   = snap.child('details').child('isSummarize').getValue(Boolean.class);
 	}
 
 	function MngdUser(user) {
