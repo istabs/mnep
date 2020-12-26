@@ -33,13 +33,13 @@ function presentGantt(chartPlaceholder,
 	}, rawData, items, project) {
 
 	var table = prepareTable(items);
-	var chart = new google.visualization.Gantt(document.getElementById(htmlTag));
+	var chart = new google.visualization.Gantt(document.getElementById(chartPlaceholder));
 
 	// setup for bars click
 	google.visualization.events.addListener(chart, 'select',
 		e => {
 			var id = ids[chart.getSelection()[0].row];
-			prepareAirtables2(project, htmlTag, rawData, a => a[project.id] === id)
+			prepareAirtables2(project, chartPlaceholder, rawData, a => a[project.id] === id)
 		}
 	);
 	chart.draw(table, options)
