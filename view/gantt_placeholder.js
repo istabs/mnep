@@ -39,7 +39,7 @@ function presentGantt(chartPlaceholder,
 	google.visualization.events.addListener(chart, 'select',
 		e => {
 			var id = ids[chart.getSelection()[0].row];
-			prepareAirtables2(project, chartPlaceholder, rawData, a => a['id'] === id)
+			prepareAirtables2(project, chartPlaceholder, rawData, a => a['id'] === id || (Array.isArray(a['Predecessores']) ? a['Predecessores'][0] : a['Predecessores']) === id)
 		}
 	);
 	chart.draw(table, options)
