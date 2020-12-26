@@ -2,9 +2,10 @@
 function prepareAirtables(project, chartPlaceholder, rawData) {
 	var rows = [];
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
-		if (item.fields["Sumário"]) {
-			var preds = item.fields[project.parent] ? item.fields[project.parent][0] : null;
-			var actvEnd = new Date(item.fields[project.end])
+		if (! project.isSummarize || (project.isSummarize && project.summary && item.fields[project.summary])) {
+			let actvEnd = new Date(item.fields[project.end])
+			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
+			let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
 			actvEnd.setDate(actvEnd.getDate() + 1)
 			if (item.fields[project.start] && item.fields[project.end]) {
 				rows.push([
@@ -14,7 +15,7 @@ function prepareAirtables(project, chartPlaceholder, rawData) {
 					new Date(item.fields[project.start]), // Start Date
 					actvEnd, // End Date
 					0, // Duration (number)
-					0, // Percent Complete (number)
+					progress, // Percent Complete (number)
 					preds, // Dependencies (string / comma separated)
 				]);
 			}
