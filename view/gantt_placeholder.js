@@ -39,8 +39,56 @@ function presentGantt(htmlTag,
 		google.visualization.events.addListener(chart, 'select',
 			e => {
 				var id = ids[chart.getSelection()[0].row];
-				googleChartAirtableAdapt(rawData, _.partial(detailsAdapter, id), curriedViewer)
+				presentGantt(htmlTag, options, rawData, filterByParent(rawData, id))
 			}
 		);
 		chart.draw(table, options)
 }
+
+// An AirTable table adapter for Google Charts
+function detailsAdapter(id, rawData, presenter, options={chart_subtitle: 'chart_subtitle'}) {
+	var rows = []
+	var classificacao = ""
+	var summary = ""
+	var classifications = {}
+	const SUMARIO = ': Sumário'
+	rawData.records.forEach(item => {
+		if (item.id === id) {
+			classificacao = item.fields["Classificação"];
+			if (item.fields && item.fields["Atividade"] && item.fields["Atividade"].includes(SUMARIO)) {
+				document.getElementById(options.chart_subtitle).textContent = item.fields["Atividade"].replace(SUMARIO,'');
+				summary = item.id
+			}
+		}
+		classifications[item.id] = item.fields.Atividade;
+	})
+	rawData.records.forEach(item => {
+		if (item.id === id || (item.fields["Classificação"] && item.fields["Classificação"] === classificacao)) {
+			if (item.fields.Inicio && item.fields.Fim) {
+				let fim = new Date(item.fields["Fim"])
+				fim.setDate(fim.getDate() + 1)
+				let classification = '';
+				if (item.fields.Predecessores && item.fields.Predecessores[0]) {
+					classification = classifications[item.fields.Predecessores[0]]
+					if (classification.includes(SUMARIO)) {
+						classification = classifications[item.id]
+					}
+				}
+				rows.push([
+					item.id, // Task ID
+					item.fields["Atividade"], // Task Name
+					classification,
+					new Date(item.fields["Inicio"]), // Start Date
+					fim, // End Date
+					0, // Duration
+					item.fields["Progresso"], // Percent Complete
+					null, // Dependencies
+				]);
+			} else {
+				console.log('missing date on ' + item.id + ', ' + item.fields.Atividade)
+			}
+		}
+	});
+	presentGantt(rows);
+}
+
