@@ -49,8 +49,7 @@ function presentGantt(chartPlaceholder,
 function prepareAirtables2(project, chartPlaceholder, rawData, rule) {
 	var rows = [];
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
-		console.log('---')
-		if (item['Predecessores']) console.log(item['Predecessores'])
+		console.log(item)
 		//console.log(Array.isArray(item['Predecessores']) ? item['Predecessores'][0] : item['Predecessores'])
 		if (rule(item['id']) || rule(Array.isArray(item['Predecessores']) ? item['Predecessores'][0] : item['Predecessores'])) {
 			let actvEnd = new Date(item.fields[project.end])
