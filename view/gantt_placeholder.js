@@ -21,6 +21,10 @@ function prepareTable(items) {
 
 	var i = 0;
 	items.forEach(item => {
+		if (item[0] && Array.isArray(item[0])) item[0] = item[0][0];
+		if (item[0] && Array.isArray(item[1])) item[1] = item[1][0];
+		if (item[0] && Array.isArray(item[2])) item[2] = item[2][0];
+		if (item[0] && Array.isArray(item[7])) item[7] = item[7][0];
 		table.addRow(item);
 		ids[i++] = item[0];
 	})
