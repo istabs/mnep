@@ -39,7 +39,7 @@ function presentGantt(chartPlaceholder,
 	google.visualization.events.addListener(chart, 'select',
 		e => {
 			var id = ids[chart.getSelection()[0].row];
-			prepareAirtables2(project, chartPlaceholder, rawData, a => a['id'] === id || (Array.isArray(a['Predecessores']) ? a['Predecessores'][0] : a['Predecessores']) === id)
+			prepareAirtables2(project, chartPlaceholder, rawData, a => a === id)
 		}
 	);
 	chart.draw(table, options)
@@ -48,7 +48,11 @@ function presentGantt(chartPlaceholder,
 function prepareAirtables2(project, chartPlaceholder, rawData, rule) {
 	var rows = [];
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
-		if (rule(item)) {
+		console.log('---')
+		console.log(id)
+		console.log(item['id'])
+		console.log(Array.isArray(item['Predecessores']) ? item['Predecessores'][0] : item['Predecessores'])
+		if (rule(item['id']) || rule(Array.isArray(item['Predecessores']) ? item['Predecessores'][0] : item['Predecessores'])) {
 			let actvEnd = new Date(item.fields[project.end])
 			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
 			let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
