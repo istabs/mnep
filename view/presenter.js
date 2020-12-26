@@ -31,3 +31,7 @@ function airtables1(project, chartPlaceholder) {
 	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
 	readAirtablesData(url, project, chartPlaceholder, rawData, prepareAirtables);
 }
+
+var parsers = {
+	"AirTables:airtables1": airtables1,
+}

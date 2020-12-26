@@ -31,7 +31,3 @@ function readAirtablesData(url, project, chartPlaceholder, acc, callback) {
 		}
 	});
 }
-
-var parsers = {
-	"AirTables:airtables1": airtables1,
-}
