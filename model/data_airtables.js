@@ -32,6 +32,6 @@ function readAirtablesData(url, project, chartPlaceholder, acc, callback) {
 	});
 }
 
-const parsers = {
+var parsers = {
 	"AirTables:airtables1": airtables1,
 }
