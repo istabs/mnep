@@ -28,7 +28,7 @@ function prepareTable(items) {
 	return table;
 }
 
-function presentGantt(htmlTag,
+function presentGantt(chartPlaceholder,
 	options = { gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } }, height: 640, width: 960
 	}, rawData, items, project) {
 
@@ -39,7 +39,7 @@ function presentGantt(htmlTag,
 	google.visualization.events.addListener(chart, 'select',
 		e => {
 			var id = ids[chart.getSelection()[0].row];
-			prepareAirtables2(project, chartPlaceholder, rawData, a => a[project.id] === id)
+			prepareAirtables2(project, htmlTag, rawData, a => a[project.id] === id)
 		}
 	);
 	chart.draw(table, options)
