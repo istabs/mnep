@@ -32,63 +32,42 @@ function presentGantt(htmlTag,
 	options = { gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } }, height: 640, width: 960
 	}, rawData, items) {
 
-		var table = prepareTable(items);
-		var chart = new google.visualization.Gantt(document.getElementById(htmlTag));
+	var table = prepareTable(items);
+	var chart = new google.visualization.Gantt(document.getElementById(htmlTag));
 
-		// setup for bars click
-		google.visualization.events.addListener(chart, 'select',
-			e => {
-				var id = ids[chart.getSelection()[0].row];
-				presentGantt(htmlTag, options, rawData, filterByParent(rawData, id))
-			}
-		);
-		chart.draw(table, options)
+	// setup for bars click
+	google.visualization.events.addListener(chart, 'select',
+		e => {
+			var id = ids[chart.getSelection()[0].row];
+			prepareAirtables2(project, chartPlaceholder, rawData, a => a[project.id] === id)
+		}
+	);
+	chart.draw(table, options)
 }
 
-// An AirTable table adapter for Google Charts
-function detailsAdapter(id, rawData, presenter, options={chart_subtitle: 'chart_subtitle'}) {
-	var rows = []
-	var classificacao = ""
-	var summary = ""
-	var classifications = {}
-	const SUMARIO = ': Sumário'
-	rawData.records.forEach(item => {
-		if (item.id === id) {
-			classificacao = item.fields["Classificação"];
-			if (item.fields && item.fields["Atividade"] && item.fields["Atividade"].includes(SUMARIO)) {
-				document.getElementById(options.chart_subtitle).textContent = item.fields["Atividade"].replace(SUMARIO,'');
-				summary = item.id
-			}
-		}
-		classifications[item.id] = item.fields.Atividade;
-	})
-	rawData.records.forEach(item => {
-		if (item.id === id || (item.fields["Classificação"] && item.fields["Classificação"] === classificacao)) {
-			if (item.fields.Inicio && item.fields.Fim) {
-				let fim = new Date(item.fields["Fim"])
-				fim.setDate(fim.getDate() + 1)
-				let classification = '';
-				if (item.fields.Predecessores && item.fields.Predecessores[0]) {
-					classification = classifications[item.fields.Predecessores[0]]
-					if (classification.includes(SUMARIO)) {
-						classification = classifications[item.id]
-					}
-				}
+function prepareAirtables2(project, chartPlaceholder, rawData, rule) {
+	var rows = [];
+	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
+		if (rule(item)) {
+			let actvEnd = new Date(item.fields[project.end])
+			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
+			let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
+			actvEnd.setDate(actvEnd.getDate() + 1)
+			if (item.fields[project.start] && item.fields[project.end]) {
 				rows.push([
 					item.id, // Task ID
-					item.fields["Atividade"], // Task Name
-					classification,
-					new Date(item.fields["Inicio"]), // Start Date
-					fim, // End Date
-					0, // Duration
-					item.fields["Progresso"], // Percent Complete
-					null, // Dependencies
+					item.fields[project.label], // Task Name
+					item.fields[project.group], // Group (string)
+					new Date(item.fields[project.start]), // Start Date
+					actvEnd, // End Date
+					0, // Duration (number)
+					progress, // Percent Complete (number)
+					preds, // Dependencies (string / comma separated)
 				]);
-			} else {
-				console.log('missing date on ' + item.id + ', ' + item.fields.Atividade)
 			}
 		}
 	});
-	presentGantt(rows);
+	presentGantt(chartPlaceholder,
+		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
+		height: project.height * 42 + 40, width: 960 }, rawData, rows);
 }
-
