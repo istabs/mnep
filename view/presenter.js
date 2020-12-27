@@ -84,7 +84,7 @@ function prepareAirtables2(project, chartPlaceholder, rawData, id, rule) {
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (rule(item)) {
 			console.log(item);
-			let group = item.fields[project.parent][0] === id ? item['id'] : item.fields[project.parent];
+			let group = (item.fields[project.parent] && item.fields[project.parent][0] === id) ? item['id'] : item.fields[project.parent];
 			let actvEnd = new Date(item.fields[project.end])
 			actvEnd.setDate(actvEnd.getDate() + 1)
 			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
