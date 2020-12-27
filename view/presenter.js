@@ -42,7 +42,12 @@ function presentGantt(chartPlaceholder,
 			var group = "";
 			rawData.forEach(item => {
 				console.log(id + ':' + item['id'])
-				if (item['id'] === id) group = item[project.group]; })
+				if (item['id'] === id) {
+					console.log("--->" + item[project.group])
+					console.log("===>" + item['Classificação'])
+					group = item[project.group];
+				}
+			})
 			console.log(group);
 			console.log(project);
 			prepareAirtables2(project, chartPlaceholder, rawData,
