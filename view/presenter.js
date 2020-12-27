@@ -41,16 +41,11 @@ function presentGantt(chartPlaceholder,
 			var id = ids[chart.getSelection()[0].row];
 			var group = "";
 			rawData.forEach(item => {
-				console.log(id + ':' + item['id'])
 				if (item['id'] === id) {
-					console.log(item)
-					console.log("--->" + item[project.group])
-					console.log("===>" + item['Classificação'])
-					group = item[project.group];
+					group = item.fields[project.group];
 				}
 			})
 			console.log(group);
-			console.log(project);
 			prepareAirtables2(project, chartPlaceholder, rawData,
 				a => a['id'] === id || (Array.isArray(a.fields[project.group]) ? a.fields[project.group][0] : a.fields[project.group]) === id)
 		}
