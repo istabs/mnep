@@ -69,7 +69,7 @@ function prepareAirtables(project, chartPlaceholder, rawData) {
 					actvEnd, // End Date
 					0, // Duration (number)
 					progress, // Percent Complete (number)
-					null, // Dependencies (string / comma separated)
+					preds, // Dependencies (string / comma separated)
 				]);
 			}
 		}
@@ -98,7 +98,7 @@ function prepareAirtables2(project, chartPlaceholder, rawData, id, rule) {
 					actvEnd, // End Date
 					0, // Duration (number)
 					progress, // Percent Complete (number)
-					preds, // Dependencies (string / comma separated)
+					null, // Dependencies (string / comma separated)
 				]);
 			}
 		}
