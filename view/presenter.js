@@ -83,15 +83,17 @@ function prepareAirtables2(project, chartPlaceholder, rawData, rule) {
 	var rows = [];
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (rule(item)) {
+			console.log(item);
+			let group = item.fields.isSummarize ? item.fields[project.name] : item.fields[project.parent];
 			let actvEnd = new Date(item.fields[project.end])
+			actvEnd.setDate(actvEnd.getDate() + 1)
 			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
 			let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
-			actvEnd.setDate(actvEnd.getDate() + 1)
 			if (item.fields[project.start] && item.fields[project.end]) {
 				rows.push([
 					item.id, // Task ID
 					item.fields[project.label], // Task Name
-					item.fields[project.parent], // Group (string)
+					group, // Group (string)
 					new Date(item.fields[project.start]), // Start Date
 					actvEnd, // End Date
 					0, // Duration (number)
