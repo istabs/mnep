@@ -39,8 +39,12 @@ function presentGantt(chartPlaceholder,
 	google.visualization.events.addListener(chart, 'select',
 		e => {
 			var id = ids[chart.getSelection()[0].row];
+			var group = "";
+			rawData.forEach(item => {if(item['id'] === id) group = item[project.group]; })
+			console.log(group);
 			console.log(project);
-			prepareAirtables2(project, chartPlaceholder, rawData, a => a['id'] === id || (Array.isArray(a.fields[project.parent]) ? a.fields[project.parent][0] : a.fields[project.parent]) === id)
+			prepareAirtables2(project, chartPlaceholder, rawData,
+				a => a['id'] === id || (Array.isArray(a.fields[project.group]) ? a.fields[project.group][0] : a.fields[project.group]) === id)
 		}
 	);
 	chart.draw(table, options)
