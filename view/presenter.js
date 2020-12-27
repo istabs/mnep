@@ -40,7 +40,9 @@ function presentGantt(chartPlaceholder,
 		e => {
 			var id = ids[chart.getSelection()[0].row];
 			var group = "";
-			rawData.forEach(item => {if(item['id'] === id) group = item[project.group]; })
+			rawData.forEach(item => {
+				console.log(id + ':' + item['id'])
+				if (item['id'] === id) group = item[project.group]; })
 			console.log(group);
 			console.log(project);
 			prepareAirtables2(project, chartPlaceholder, rawData,
