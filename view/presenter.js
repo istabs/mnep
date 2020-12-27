@@ -40,7 +40,7 @@ function presentGantt(chartPlaceholder,
 		e => {
 			var id = ids[chart.getSelection()[0].row];
 			console.log(project);
-			prepareAirtables2(project, chartPlaceholder, rawData, a => a['id'] === id || (Array.isArray(a.fields[project.parent]) ? a.fields[project.parent][0] : a.fields[project.parent]) === id)
+			prepareAirtables3(project, chartPlaceholder, rawData, a => a['id'] === id || (Array.isArray(a.fields[project.parent]) ? a.fields[project.parent][0] : a.fields[project.parent]) === id)
 		}
 	);
 	chart.draw(table, options)
