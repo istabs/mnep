@@ -45,9 +45,8 @@ function presentGantt(chartPlaceholder,
 					group = item.fields[project.group];
 				}
 			})
-			console.log(group);
 			prepareAirtables2(project, chartPlaceholder, rawData,
-				a => a['id'] === id || (Array.isArray(a.fields[project.group]) ? a.fields[project.group][0] : a.fields[project.group]) === id)
+				a => a.fields[project.group] === group)
 		}
 	);
 	chart.draw(table, options)
