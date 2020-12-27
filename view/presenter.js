@@ -43,6 +43,7 @@ function presentGantt(chartPlaceholder,
 			rawData.forEach(item => {
 				console.log(id + ':' + item['id'])
 				if (item['id'] === id) {
+					console.log(item)
 					console.log("--->" + item[project.group])
 					console.log("===>" + item['Classificação'])
 					group = item[project.group];
