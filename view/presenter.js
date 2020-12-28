@@ -116,6 +116,7 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 }
 
 function airtables1(project, chartPlaceholders) {
+	window.scrollTop = 0;
 	document.getElementById(chartPlaceholders.chart).innerHTML = "";
 	document.getElementById(chartPlaceholders.title).textContent = project.name;
 	document.getElementById(chartPlaceholders.subtitle).textContent = "";
