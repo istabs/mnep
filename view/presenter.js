@@ -111,7 +111,7 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 			}
 		}
 	});
-	document.getElementById(chartPlaceholders.subtitle).textContent = groupLabel;
+	document.getElementById(chartPlaceholders.subtitle).textContent = groupLabels[id];
 	presentGantt(chartPlaceholders,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
 		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
