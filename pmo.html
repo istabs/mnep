@@ -91,12 +91,22 @@
 		else console.log(prjType + ' not defined - exiting');
 	}
 
+	function escapeHtml(unsafe) {
+		return unsafe
+			 .replace(/&/g, "&amp;")
+			 .replace(/</g, "&lt;")
+			 .replace(/>/g, "&gt;")
+			 .replace(/"/g, "&quot;")
+			 .replace(/'/g, "&#039;");
+	 }	
+
 	function completeMenu(projectsLst, chartPlaceholders, dropdownTag) {
 		let dropdownLinks = "";
 		projectsLst.forEach(project => {
 			let prjName = project.name;
+			placeholdersMarshal = escapeHtml(JSON.stringify(chartPlaceholders));
 			dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"fillChart('" + project.name + "','"
-			+ chartPlaceholders + "')\" href=\"#\">" + project.name + "</a>"
+			+ placeholdersMarshal + "')\" href=\"#\">" + project.name + "</a>"
 		});
 		document.getElementById(dropdownTag).innerHTML = dropdownLinks
 	}
