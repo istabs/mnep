@@ -38,6 +38,7 @@ function presentGantt(chartPlaceholders,
 	// setup for bars click
 	google.visualization.events.addListener(chart, 'select',
 		e => {
+			window.scrollTop = 0;
 			var id = ids[chart.getSelection()[0].row];
 			var group = "";
 			rawData.forEach(item => {
@@ -116,7 +117,6 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 }
 
 function airtables1(project, chartPlaceholders) {
-	window.scrollTop = 0;
 	document.getElementById(chartPlaceholders.chart).innerHTML = "";
 	document.getElementById(chartPlaceholders.title).textContent = project.name;
 	document.getElementById(chartPlaceholders.subtitle).textContent = "";
