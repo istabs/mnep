@@ -111,7 +111,7 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 }
 
 function airtables1(project, chartPlaceholders) {
-	document.getElementById(chartPlaceholders.title).innerHTML = "";
+	document.getElementById(chartPlaceholders.chart).innerHTML = "";
 	document.getElementById(chartPlaceholders.title).textContent = project.name;
 	document.getElementById(chartPlaceholders.subtitle).textContent = "";
 	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
