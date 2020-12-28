@@ -81,7 +81,7 @@ function prepareAirtables(project, chartPlaceholders, rawData) {
 
 function prepareGroupLabels(rawData, project) {
 	let groupLabels = {};
-	rawData.forEach(item => groupLabels[rawData['id']] = rawData.fields[project.group]);
+	rawData.forEach(item => groupLabels[item['id']] = item.fields[project.group]);
 	return groupLabels;
 }
 
