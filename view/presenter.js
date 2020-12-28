@@ -28,12 +28,12 @@ function prepareTable(items) {
 	return table;
 }
 
-function presentGantt(chartPlaceholder,
+function presentGantt(chartPlaceholders,
 	options = { gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } }, height: 640, width: 960
 	}, rawData, items, project) {
 
 	var table = prepareTable(items);
-	var chart = new google.visualization.Gantt(document.getElementById(chartPlaceholder));
+	var chart = new google.visualization.Gantt(document.getElementById(chartPlaceholders.chart));
 
 	// setup for bars click
 	google.visualization.events.addListener(chart, 'select',
@@ -45,14 +45,14 @@ function presentGantt(chartPlaceholder,
 					group = item.fields[project.group];
 				}
 			})
-			prepareAirtables2(project, chartPlaceholder, rawData, id,
+			prepareAirtablesDetails(project, chartPlaceholder, rawData, id,
 				a => a.fields[project.group] === group)
 		}
 	);
 	chart.draw(table, options)
 }
 
-function prepareAirtables(project, chartPlaceholder, rawData) {
+function prepareAirtables(project, chartPlaceholders, rawData) {
 	var rows = [];
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (! project.isSummarize || (project.isSummarize && project.summary && item.fields[project.summary])) {
@@ -74,13 +74,14 @@ function prepareAirtables(project, chartPlaceholder, rawData) {
 			}
 		}
 	});
-	presentGantt(chartPlaceholder,
+	presentGantt(chartPlaceholders,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
 		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
 }
 
-function prepareAirtables2(project, chartPlaceholder, rawData, id, rule) {
+function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) {
 	var rows = [];
+	let groupLabel = id;
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (rule(item)) {
 			console.log(item);
@@ -103,15 +104,18 @@ function prepareAirtables2(project, chartPlaceholder, rawData, id, rule) {
 			}
 		}
 	});
-	presentGantt(chartPlaceholder,
+	document.getElementById(chartPlaceholders.subtitle).textContent = groupLabel;
+	presentGantt(chartPlaceholders,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
 		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
 }
 
-function airtables1(project, chartPlaceholder) {
-	document.getElementById('chart_title').textContent = project.name;
+function airtables1(project, chartPlaceholders) {
+	document.getElementById(chartPlaceholders.title).innerHTML = "";
+	document.getElementById(chartPlaceholders.title).textContent = project.name;
+	document.getElementById(chartPlaceholders.subtitle).textContent = "";
 	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
-	readAirtablesData(url, project, chartPlaceholder, rawData, prepareAirtables);
+	readAirtablesData(url, project, chartPlaceholders, rawData, prepareAirtables);
 }
 
 var parsers = {

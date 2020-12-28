@@ -17,7 +17,7 @@ function Project(snap) {
 	this.isSummarize   = snap.child('details').child('isSummarize').val();
 }
 
-function readAirtablesData(url, project, chartPlaceholder, acc, callback) {
+function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
 	$.ajax({
 		url: url,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
@@ -27,7 +27,7 @@ function readAirtablesData(url, project, chartPlaceholder, acc, callback) {
 				readAirtablesData(url + '?offset=' + rawData.offset, project, chartPlaceholder, acc, callback);
 				return;
 			}
-			callback(project, chartPlaceholder, acc);
+			callback(project, chartPlaceholders, acc);
 		}
 	});
 }

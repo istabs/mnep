@@ -81,22 +81,22 @@
 
 	var rawData = [];
 
-	function fillChart(project, chartPlaceholder) {
+	function fillChart(project, chartPlaceholders) {
 		let prjDetails = projects[project];
 		let prjType = prjDetails.pattern + ":" + prjDetails.maptype
 		if (parsers.hasOwnProperty(prjType)) {
 			rawData = [];
-			parsers[prjType](prjDetails, chartPlaceholder);
+			parsers[prjType](prjDetails, chartPlaceholders);
 		}
 		else console.log(prjType + ' not defined - exiting');
 	}
 
-	function completeMenu(projectsLst, chartPlaceholder, dropdownTag) {
+	function completeMenu(projectsLst, chartPlaceholders, dropdownTag) {
 		let dropdownLinks = "";
 		projectsLst.forEach(project => {
 			let prjName = project.name;
 			dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"fillChart('" + project.name + "','"
-			+ chartPlaceholder + "')\" href=\"#\">" + project.name + "</a>"
+			+ chartPlaceholders + "')\" href=\"#\">" + project.name + "</a>"
 		});
 		document.getElementById(dropdownTag).innerHTML = dropdownLinks
 	}
@@ -119,8 +119,9 @@
 		}
 		// Dynamic fulfilment
 		let mngdUser = new MngdUser(user);
-		mngdUser.onDefault(project => fillChart(project, 'chart'));
-		mngdUser.onMenu(projects => completeMenu(projects, 'chart', 'ganttCharts'));
+		let chart_placeholders = {chart: "chart_placeholder", title: "chart-title_placeholder", subtitle: "chart-subtitle_placeholder"}
+		mngdUser.onDefault(project => fillChart(project, chart_placeholders));
+		mngdUser.onMenu(projects => completeMenu(projects, chart_placeholders, 'dropdown-menu_placeholder'));
 	};
 
 	var handleSignedOutUser = function () {
@@ -157,7 +158,7 @@
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 						Gantts
 					</a>
-					<div id="ganttCharts" class="dropdown-menu"></div>
+					<div id="dropdown-menu_placeholder" class="dropdown-menu"></div>
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
@@ -181,12 +182,12 @@
 			<h1 class="printeronly">Calendarização dos projetos PRR do MNE</h1>
 			<p class="printeronly">Cenário em evolução.</p>
 			<h1>
-				<div id="chart_title"></div>
+				<div id="chart-title_placeholder"></div>
 			</h1>
 			<h2>
-				<div id="chart_subtitle"></div>
+				<div id="chart-subtitle_placeholder"></div>
 			</h2>
-			<div id="chart"></div>
+			<div id="chart_placeholder"></div>
 			<div class="printeronly right" style="line-height:4em">
 				<img src="img/GglLogo.png" alt="GGL logo" style="vertical-align:middle" width="20"
 					height="20"><span>&nbsp;GGL Consulting</span>
