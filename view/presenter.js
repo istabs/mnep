@@ -28,6 +28,13 @@ function prepareTable(items) {
 	return table;
 }
 
+function afterDraw() {
+	window.scrollTop=0;
+	window.scrollTo(0, 0);
+	window.scroll(0, 0);
+	console.log('all done');
+}
+
 function presentGantt(chartPlaceholders,
 	options = { gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } }, height: 640, width: 960
 	}, rawData, items, project) {
@@ -49,7 +56,7 @@ function presentGantt(chartPlaceholders,
 				a => a.fields[project.group] === group)
 		}
 	);
-	google.visualization.events.addListener(chart, 'ready', e => window.scrollTop = 0);
+	google.visualization.events.addListener(chart, 'ready', afterDraw);
 	chart.draw(table, options)
 }
 
