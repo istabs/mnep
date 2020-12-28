@@ -38,7 +38,6 @@ function presentGantt(chartPlaceholders,
 	// setup for bars click
 	google.visualization.events.addListener(chart, 'select',
 		e => {
-			window.scrollTop = 0;
 			var id = ids[chart.getSelection()[0].row];
 			var group = "";
 			rawData.forEach(item => {
@@ -51,6 +50,7 @@ function presentGantt(chartPlaceholders,
 		}
 	);
 	chart.draw(table, options)
+	window.scrollTop = 0;
 }
 
 function prepareAirtables(project, chartPlaceholders, rawData) {
