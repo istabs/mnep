@@ -92,9 +92,9 @@
 	}
 
 	function menuChoice(project, marshaledChartPlaceholders) {
-		window.scrollTop = 0;
 		let chartPlaceholders = JSON.parse(marshaledChartPlaceholders);
 		fillChart(project, chartPlaceholders);
+		window.scrollTop = 0;
 	}
 
 	function escapeHtml(unsafe) {
