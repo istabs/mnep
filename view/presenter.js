@@ -49,6 +49,7 @@ function presentGantt(chartPlaceholders,
 				a => a.fields[project.group] === group)
 		}
 	);
+	window.scrollTop = 0;
 	chart.draw(table, options)
 	window.scrollTop = 0;
 }
