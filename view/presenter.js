@@ -90,8 +90,6 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 	let groupLabels = prepareGroupLabels(rawData, project);
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (rule(item)) {
-			console.log(item);
-			//let group = (item.fields[project.parent] && item.fields[project.parent][0] === id) ? item['id'] : item.fields[project.parent];
 			let group = item.fields[project.parent] ? (item.fields[project.parent][0] === id ? groupLabels[item['id']] : groupLabels[item.fields[project.parent][0]]) : "";
 			let actvEnd = new Date(item.fields[project.end])
 			actvEnd.setDate(actvEnd.getDate() + 1)

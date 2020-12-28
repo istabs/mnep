@@ -92,7 +92,7 @@
 	}
 
 	function menuChoice(project, marshaledChartPlaceholders) {
-		$('html,body').scrollTop(0);
+		window.scroll(0,0);
 		let chartPlaceholders = JSON.parse(marshaledChartPlaceholders);
 		fillChart(project, chartPlaceholders);
 	}
