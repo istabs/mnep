@@ -49,9 +49,8 @@ function presentGantt(chartPlaceholders,
 				a => a.fields[project.group] === group)
 		}
 	);
-	window.scrollTop = 0;
+	google.visualization.events.addListener(chart, 'ready', e => window.scrollTop = 0);
 	chart.draw(table, options)
-	window.scrollTop = 0;
 }
 
 function prepareAirtables(project, chartPlaceholders, rawData) {
