@@ -92,7 +92,7 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 		if (rule(item)) {
 			console.log(item);
 			//let group = (item.fields[project.parent] && item.fields[project.parent][0] === id) ? item['id'] : item.fields[project.parent];
-			let group = item.fields[project.parent][0] === id ? groupLabels[item['id']] : groupLabels[item.fields[project.parent][0]];
+			let group = item.fields[project.parent] ? (item.fields[project.parent][0] === id ? groupLabels[item['id']] : groupLabels[item.fields[project.parent][0]]) : "";
 			let actvEnd = new Date(item.fields[project.end])
 			actvEnd.setDate(actvEnd.getDate() + 1)
 			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
