@@ -91,6 +91,11 @@
 		else console.log(prjType + ' not defined - exiting');
 	}
 
+	function menuChoice(project, marshaledChartPlaceholders) {
+		let chartPlaceholders = JSON.parse(marshaledChartPlaceholders);
+		fillChart(project, chartPlaceholders);
+	}
+
 	function escapeHtml(unsafe) {
 		return unsafe
 			 .replace(/&/g, "&amp;")
@@ -105,7 +110,7 @@
 		projectsLst.forEach(project => {
 			let prjName = project.name;
 			placeholdersMarshal = escapeHtml(JSON.stringify(chartPlaceholders));
-			dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"fillChart('" + project.name + "','"
+			dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"menuChoice('" + project.name + "','"
 			+ placeholdersMarshal + "')\" href=\"#\">" + project.name + "</a>"
 		});
 		document.getElementById(dropdownTag).innerHTML = dropdownLinks
