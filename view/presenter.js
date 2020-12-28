@@ -79,13 +79,22 @@ function prepareAirtables(project, chartPlaceholders, rawData) {
 		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
 }
 
+function getGroupLabel(rawData, id) {
+	let groupLabel = "";
+	for (i=0; i<rawData.length; i++) {
+		if (rawData[i] === id)
+			return groupLabel;
+	}
+	return groupLabel;
+}
+
 function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) {
 	var rows = [];
-	let groupLabel = id;
+	let groupLabel = getGroupLabel(rawData, id);
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (rule(item)) {
 			console.log(item);
-			let group = (item.fields[project.parent] && item.fields[project.parent][0] === id) ? item['id'] : item.fields[project.parent];
+			//let group = (item.fields[project.parent] && item.fields[project.parent][0] === id) ? item['id'] : item.fields[project.parent];
 			let actvEnd = new Date(item.fields[project.end])
 			actvEnd.setDate(actvEnd.getDate() + 1)
 			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
@@ -94,7 +103,7 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 				rows.push([
 					item.id, // Task ID
 					item.fields[project.label], // Task Name
-					group, // Group (string)
+					groupLabel, // Group (string)
 					new Date(item.fields[project.start]), // Start Date
 					actvEnd, // End Date
 					0, // Duration (number)
