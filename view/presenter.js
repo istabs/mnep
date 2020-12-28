@@ -45,7 +45,7 @@ function presentGantt(chartPlaceholders,
 					group = item.fields[project.group];
 				}
 			})
-			prepareAirtablesDetails(project, chartPlaceholder, rawData, id,
+			prepareAirtablesDetails(project, chartPlaceholders, rawData, id,
 				a => a.fields[project.group] === group)
 		}
 	);
