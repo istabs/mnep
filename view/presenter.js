@@ -87,7 +87,7 @@ function prepareGroupLabels(rawData, project) {
 
 function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) {
 	var rows = [];
-	let groupLabels = getGroupLabel(rawData, project);
+	let groupLabels = prepareGroupLabels(rawData, project);
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (rule(item)) {
 			console.log(item);
