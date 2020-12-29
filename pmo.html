@@ -134,7 +134,7 @@
 		}
 		// Dynamic fulfilment
 		let mngdUser = new MngdUser(user);
-		let chart_placeholders = {chart: "chart_placeholder", title: "chart-title_placeholder", subtitle: "chart-subtitle_placeholder"}
+		let chart_placeholders = {chart: "chart_placeholder", title: "chart-title_placeholder", subtitle: "chart-subtitle_placeholder", backBtn: "backBtn"}
 		mngdUser.onDefault(project => fillChart(project, chart_placeholders));
 		mngdUser.onMenu(projects => completeMenu(projects, chart_placeholders, 'dropdown-menu_placeholder'));
 	};
