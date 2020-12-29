@@ -57,6 +57,7 @@ var rows = [];
 var curriedPresentGantt = ()=>{alert('original stuff!!!')};
 
 function prepareAirtables(project, chartPlaceholders, rawData) {
+	rows = [];
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (! project.isSummarize || (project.isSummarize && project.summary && item.fields[project.summary])) {
 			let actvEnd = new Date(item.fields[project.end])
