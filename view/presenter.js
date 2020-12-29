@@ -133,7 +133,7 @@ function airtables1(project, chartPlaceholders) {
 	document.getElementById(chartPlaceholders.chart).innerHTML = "";
 	document.getElementById(chartPlaceholders.title).textContent = project.name;
 	document.getElementById(chartPlaceholders.subtitle).textContent = "";
-	document.getElementById(chartPlaceholders.backBtn).display = none;
+	document.getElementById(chartPlaceholders.backBtn).display = "none";
 	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
 	readAirtablesData(url, project, chartPlaceholders, rawData, prepareAirtables);
 }
