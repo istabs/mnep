@@ -77,9 +77,13 @@ function prepareAirtables(project, chartPlaceholders, rawData) {
 			}
 		}
 	});
-	curriedPresentGantt = () => presentGantt(chartPlaceholders,
+	curriedPresentGantt = () => {
+		document.getElementById(chartPlaceholders.subtitle).textContent = "";
+		document.getElementById(chartPlaceholders.backBtn).display = none;
+		presentGantt(chartPlaceholders,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
 		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
+	}
 	curriedPresentGantt();
 	/*
 	presentGantt(chartPlaceholders,
@@ -118,7 +122,7 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 			}
 		}
 	});
-	document.getElementById(chartPlaceholders.title).innerHTML = "<a onclick='curriedPresentGantt()'>" + project.name + "</a>"
+	document.getElementById(chartPlaceholders.backBtn).innerHTML = "<a onclick='curriedPresentGantt()'>" + project.name + "</a>"
 	document.getElementById(chartPlaceholders.subtitle).textContent = groupLabels[id];
 	presentGantt(chartPlaceholders,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
@@ -129,6 +133,7 @@ function airtables1(project, chartPlaceholders) {
 	document.getElementById(chartPlaceholders.chart).innerHTML = "";
 	document.getElementById(chartPlaceholders.title).textContent = project.name;
 	document.getElementById(chartPlaceholders.subtitle).textContent = "";
+	document.getElementById(chartPlaceholders.backBtn).display = none;
 	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
 	readAirtablesData(url, project, chartPlaceholders, rawData, prepareAirtables);
 }
