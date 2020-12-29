@@ -53,13 +53,15 @@ function presentGantt(chartPlaceholders,
 	chart.draw(table, options)
 }
 
+var rows = [];
+var curriedPresentGantt = ()=>{};
+
 function prepareAirtables(project, chartPlaceholders, rawData) {
-	var rows = [];
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
 		if (! project.isSummarize || (project.isSummarize && project.summary && item.fields[project.summary])) {
 			let actvEnd = new Date(item.fields[project.end])
 			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
-			let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
+			//let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
 			actvEnd.setDate(actvEnd.getDate() + 1)
 			if (item.fields[project.start] && item.fields[project.end]) {
 				rows.push([
@@ -75,9 +77,15 @@ function prepareAirtables(project, chartPlaceholders, rawData) {
 			}
 		}
 	});
+	curriedPresentGantt = () => presentGantt(chartPlaceholders,
+		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
+		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
+	curriedPresentGantt();
+	/*
 	presentGantt(chartPlaceholders,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
 		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
+	*/
 }
 
 function prepareGroupLabels(rawData, project) {
@@ -95,7 +103,7 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 			let actvEnd = new Date(item.fields[project.end])
 			actvEnd.setDate(actvEnd.getDate() + 1)
 			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
-			let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
+			//let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
 			if (item.fields[project.start] && item.fields[project.end]) {
 				rows.push([
 					item.id, // Task ID
@@ -110,6 +118,7 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 			}
 		}
 	});
+	document.getElementById(chartPlaceholders.title).innerHTML = "<a onclick='curriedPresentGantt()'>" + project.name + "</a>"
 	document.getElementById(chartPlaceholders.subtitle).textContent = groupLabels[id];
 	presentGantt(chartPlaceholders,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
