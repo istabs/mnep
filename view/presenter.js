@@ -54,7 +54,7 @@ function presentGantt(chartPlaceholders,
 }
 
 var rows = [];
-var curriedPresentGantt = ()=>{};
+var curriedPresentGantt = ()=>{alert('original stuff!!!')};
 
 function prepareAirtables(project, chartPlaceholders, rawData) {
 	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
