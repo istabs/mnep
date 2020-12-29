@@ -122,7 +122,7 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 			}
 		}
 	});
-	document.getElementById(chartPlaceholders.backBtn).innerHTML = "<a onclick='curriedPresentGantt()'>" + project.name + "</a>"
+	document.getElementById(chartPlaceholders.backBtn).style.display = "inline"
 	document.getElementById(chartPlaceholders.subtitle).textContent = groupLabels[id];
 	presentGantt(chartPlaceholders,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
