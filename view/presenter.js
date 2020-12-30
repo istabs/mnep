@@ -54,7 +54,7 @@ function presentGantt(chartPlaceholders,
 			*/
 			if (resources[id] && project.link && resources[id].fields[project.link]) {
 				placeholdersMarshal = JSON.stringify(chartPlaceholders);
-				menuChoice(project.name, placeholdersMarshal);
+				menuChoice(resources[id].fields[project.link], placeholdersMarshal);
 				return;
 			}
 			var group = resources[id].fields[project.group];
