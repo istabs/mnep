@@ -40,16 +40,24 @@ function presentGantt(chartPlaceholders,
 	var chart = new google.visualization.Gantt(document.getElementById(chartPlaceholders.chart));
 
 	// setup for bars click
+	var resources = {};
+	rawData.forEach(item => resources[item['id']] = item);
 	google.visualization.events.addListener(chart, 'select',
 		e => {
 			var id = ids[chart.getSelection()[0].row];
-			var group = resources[id];
+			/*
 			var group = "";
 			rawData.forEach(item => {
 				if (item['id'] === id) {
 					group = item.fields[project.group];
 				}
 			})
+			*/
+			if (resources[id] && project.link && resources[id].fields[project.link]) {
+				window.open(resources[id].fields[project.link], "_self");
+				return;
+			}
+			var group = resources[id].fields[project.group];
 			prepareAirtablesDetails(project, chartPlaceholders, rawData, id,
 				a => a.fields[project.group] === group)
 		}
