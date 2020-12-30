@@ -34,7 +34,7 @@ function presentGantt(chartPlaceholders,
 	options = { gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } }, height: 640, width: 960
 	}, rawData, items, project) {
 
-	rawData.forEach(item => resources[item['id']] = item[project.label]);
+	rawData.forEach(item => resources[item['id']] = item.fields[project.label]);
 
 	var table = prepareTable(items);
 	var chart = new google.visualization.Gantt(document.getElementById(chartPlaceholders.chart));
