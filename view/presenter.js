@@ -34,14 +34,13 @@ function presentGantt(chartPlaceholders,
 	options = { gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } }, height: 640, width: 960
 	}, rawData, items, project) {
 
-	rawData.forEach(item => resources[item['id']] = item.fields[project.label]);
-
 	var table = prepareTable(items);
 	var chart = new google.visualization.Gantt(document.getElementById(chartPlaceholders.chart));
 
-	// setup for bars click
 	var resources = {};
 	rawData.forEach(item => resources[item['id']] = item);
+	
+	// setup for bars click
 	google.visualization.events.addListener(chart, 'select',
 		e => {
 			var id = ids[chart.getSelection()[0].row];
