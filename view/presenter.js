@@ -53,7 +53,7 @@ function presentGantt(chartPlaceholders,
 			})
 			*/
 			if (resources[id] && project.link && resources[id].fields[project.link]) {
-				placeholdersMarshal = escapeHtml(JSON.stringify(chartPlaceholders));
+				placeholdersMarshal = JSON.stringify(chartPlaceholders);
 				menuChoice(project.name, placeholdersMarshal);
 				return;
 			}
