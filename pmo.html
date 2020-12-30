@@ -29,6 +29,7 @@
 
 <script type="text/javascript" src="config/firebase.js"></script>
 
+<script type="text/javascript" src="tools/helpers.js"></script>
 <script type="text/javascript" src="model/data_airtables.js"></script>
 <script type="text/javascript" src="view/presenter.js"></script>
 
@@ -95,15 +96,6 @@
 		let chartPlaceholders = JSON.parse(marshaledChartPlaceholders);
 		fillChart(project, chartPlaceholders);
 	}
-
-	function escapeHtml(unsafe) {
-		return unsafe
-			 .replace(/&/g, "&amp;")
-			 .replace(/</g, "&lt;")
-			 .replace(/>/g, "&gt;")
-			 .replace(/"/g, "&quot;")
-			 .replace(/'/g, "&#039;");
-	 }	
 
 	function completeMenu(projectsLst, chartPlaceholders, dropdownTag) {
 		let dropdownLinks = "";
