@@ -39,7 +39,7 @@ function presentGantt(chartPlaceholders,
 
 	var resources = {};
 	rawData.forEach(item => resources[item['id']] = item);
-	
+
 	// setup for bars click
 	google.visualization.events.addListener(chart, 'select',
 		e => {
@@ -53,7 +53,8 @@ function presentGantt(chartPlaceholders,
 			})
 			*/
 			if (resources[id] && project.link && resources[id].fields[project.link]) {
-				window.open(resources[id].fields[project.link], "_self");
+				placeholdersMarshal = escapeHtml(JSON.stringify(chartPlaceholders));
+				menuChoice(project.name + "','"	+ placeholdersMarshal)
 				return;
 			}
 			var group = resources[id].fields[project.group];

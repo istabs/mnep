@@ -103,7 +103,7 @@
 			let prjName = project.name;
 			placeholdersMarshal = escapeHtml(JSON.stringify(chartPlaceholders));
 			dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"menuChoice('" + project.name + "','"
-			+ placeholdersMarshal + "')\" href=\"#\">" + project.name + "</a>"
+			+ placeholdersMarshal + "')\">" + project.name + "</a>"
 		});
 		document.getElementById(dropdownTag).innerHTML = dropdownLinks
 	}
