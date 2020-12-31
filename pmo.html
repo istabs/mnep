@@ -72,7 +72,7 @@
 					dbRef2 = firebase.database().ref(this.menuPath);
 					dbRef2.once('value').then(snap => {
 						let project = new Project(snap);
-						projects[project.name] = project;
+						projects[project.name] = new Project(snap);
 						projectsLst.push(project)
 					}).then(()=>callback(projectsLst));
 				});
