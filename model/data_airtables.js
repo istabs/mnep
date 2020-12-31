@@ -1,3 +1,7 @@
+var projects = {};
+
+var rawData = [];
+
 function Project(snap) {
 	this.name          = snap.child('name').val();
 	this.pattern       = snap.child('pattern').val();
@@ -15,6 +19,44 @@ function Project(snap) {
 	this.link          = snap.child('details').child('mapping').child('link').val();
 	this.height        = snap.child('details').child('height').val();
 	this.isSummarize   = snap.child('details').child('isSummarize').val();
+}
+
+function MngdUser(user) {
+	this.name = user.name;
+	this.email = user.email;
+	this.key = user.email.replace(new RegExp('\\.','g'), '%2E');
+	this.basePath = "/sources/users/catalog/";
+
+	this.onDefault = callback => {
+		let defaultPath = this.basePath + this.key + "/default";
+		let dbRef1 = firebase.database().ref(defaultPath);
+		dbRef1.once('value').then(snap => {
+			let defaultTag = snap.val();
+			let defaultPrjPath = "/sources/projects/" + defaultTag;
+			let dbRef2 = firebase.database().ref(defaultPrjPath);
+			dbRef2.once('value').then(snap => {
+				let prjName = snap.child('name').val();
+				callback(prjName);
+			});
+		});
+	}
+
+	this.onMenu = function (callback) {
+		this.menuPath = this.basePath + this.key + "/list";
+		let dbRef1 = firebase.database().ref(this.menuPath);
+		let projectsLst = [];
+		dbRef1.once('value').then(snap => {
+			snap.forEach(record => {
+				this.menuPath = "/sources/projects/" + record.val();
+				dbRef2 = firebase.database().ref(this.menuPath);
+				dbRef2.once('value').then(snap => {
+					let project = new Project(snap);
+					projects[project.name] = new Project(snap);
+					projectsLst.push(project)
+				}).then(()=>callback(projectsLst));
+			});
+		});
+	}
 }
 
 function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
