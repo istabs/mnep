@@ -44,14 +44,6 @@ function presentGantt(chartPlaceholders,
 	google.visualization.events.addListener(chart, 'select',
 		e => {
 			var id = ids[chart.getSelection()[0].row];
-			/*
-			var group = "";
-			rawData.forEach(item => {
-				if (item['id'] === id) {
-					group = item.fields[project.group];
-				}
-			})
-			*/
 			if (resources[id] && project.link && resources[id].fields[project.link]) {
 				placeholdersMarshal = JSON.stringify(chartPlaceholders);
 				menuChoice(resources[id].fields[project.link], placeholdersMarshal);
@@ -67,7 +59,7 @@ function presentGantt(chartPlaceholders,
 }
 
 var rows = [];
-var curriedPresentGantt = ()=>{alert('original stuff!!!')};
+var curriedPresentGantt = ()=>{alert('Não foi encontrada qualquer informação acessível pelo utilizador.')};
 
 function prepareAirtables(project, chartPlaceholders, rawData) {
 	rows = [];
