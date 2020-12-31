@@ -44,8 +44,14 @@ function presentGantt(chartPlaceholders,
 	google.visualization.events.addListener(chart, 'select',
 		e => {
 			var id = ids[chart.getSelection()[0].row];
+			if (resources[id])
+				console.log(resources[id])
+			if (project.link)
+				console.log(project.link)
+			if (resources[id].fields[project.link])
+				console.log(resources[id].fields[project.link])
 			if (resources[id] && project.link && resources[id].fields[project.link]) {
-				placeholdersMarshal = JSON.stringify(chartPlaceholders);
+					placeholdersMarshal = JSON.stringify(chartPlaceholders);
 				menuChoice(resources[id].fields[project.link], placeholdersMarshal);
 				return;
 			}
