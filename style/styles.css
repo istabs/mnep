@@ -23,6 +23,12 @@ p {
 
 @media print {
 
+	body,
+	h1,
+	p {
+		font-family: sans-serif !important;
+	}
+
 	.printeronly {
 		display: block;
 	}
