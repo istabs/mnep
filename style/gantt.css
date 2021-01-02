@@ -2,14 +2,6 @@
   fill: transparent;
 }
 
-#chart_placeholder svg g:nth-child(3) rect:nth-child(odd) {
-  fill: rgba(0, 0, 0, 0.1);
-}
-
-#chart_placeholder svg g:nth-child(3) rect:nth-child(even) {
-  fill: transparent;
-}
-
 #chart_placeholder svg g:nth-child(3) text {
   fill: darkred;
   font-family: 'Open Sans' !important;
@@ -21,29 +13,13 @@
   stroke-width: 0;
 }
 
-#chart_placeholder svg g:nth-child(4) path {
-  stroke-width: 1;
-  stroke: black;
-}
-
-#chart_placeholder svg g:nth-child(6) rect {
-  fill: black;
-}
-
-#chart_placeholder svg g:nth-child(7) rect:nth-child(1) {
-  fill: darkred;
-}
-
-#chart_placeholder svg g:nth-child(7) rect {
-  fill: white;
-}
-
 #chart_placeholder svg g:nth-child(8) path {
   fill: rgba(0, 0, 0, 0.2);
 }
 
 #chart_placeholder svg g:nth-child(9) text {
-  fill: white;
+  font-family: 'Open Sans' !important;
+  font-weight: normal !important;
 }
 
 #chart_placeholder svg g:nth-child(10) rect {
@@ -51,11 +27,6 @@
 }
 
 #chart_placeholder svg g:nth-child(10) text {
-  fill: rgba(0, 0, 0, 0.6);
   font-family: 'Open Sans' !important;
-}
-
-#chart_placeholder svg g:nth-child(10) text:nth-child(2) {
-  fill: darkred;
 }
 /*# sourceMappingURL=gantt.css.map */

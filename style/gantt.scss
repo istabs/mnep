@@ -1,67 +1,95 @@
 #chart_placeholder svg {
 
 	// Background Color
-	g:nth-child(2) { 
-	  rect {fill: transparent;} 
+	g:nth-child(2) {
+		rect {
+			fill: transparent;
+		}
 	}
-  
+
 	// Chart Settings
 	g:nth-child(3) {
-	  rect:nth-child(odd) {fill: rgba(0,0,0,.1);} // Rows Odd
-	  rect:nth-child(even) {fill: transparent;} // Rows Even
-	  text { // Horizontal Labels
-		fill: darkred;
-		font-family: 'Open Sans' !important;
-		font-weight: normal !important;
-	  } 
-	  line { // Row Lines
-		stroke: transparent;
-		stroke-width: 0;
-	  } 
+		// // Rows Odd
+		// rect:nth-child(odd) {
+		// 	fill: rgba(0, 0, 0, .1);
+		// }
+
+		// // Rows Even
+		// rect:nth-child(even) {
+		// 	fill: transparent;
+		// }
+
+		text {
+			// Horizontal Labels
+			fill: darkred;
+			font-family: 'Open Sans' !important;
+			font-weight: normal !important;
+		}
+
+		line {
+			// Row Lines
+			stroke: transparent;
+			stroke-width: 0;
+		}
 	}
-  
-	// Arrows
-	g:nth-child(4) {
-	  path {
-		stroke-width: 1;
-		stroke: black;
-	  }
-	}
-  
-	// Shadow
-	g:nth-child(6) {
-	  rect {
-		fill: black;
-	  }
-	}
-  
-	// Bars
-	g:nth-child(7) {
-	  rect:nth-child(1) {fill: darkred;} // Target a specific Bar (First) 
-	  rect {fill: white;}
-	}
-  
+
+	// // Arrows
+	// g:nth-child(4) {
+	// 	path {
+	// 		stroke-width: 1;
+	// 		stroke: black;
+	// 	}
+	// }
+
+	// // Shadow
+	// g:nth-child(6) {
+	// 	rect {
+	// 		fill: black;
+	// 	}
+	// }
+
+	// // Bars
+	// g:nth-child(7) {
+	// 	rect:nth-child(1) {
+	// 		fill: darkred;
+	// 	}
+
+	// 	// // Target a specific Bar (First) 
+	// 	// rect {
+	// 	// 	fill: white;
+	// 	// }
+	// }
+
 	// Percent Complete
 	g:nth-child(8) {
-	  path {fill: rgba(0,0,0,.2);}
+		path {
+			fill: rgba(0, 0, 0, .2);
+		}
 	}
-  
+
 	// Side Labels
 	g:nth-child(9) {
-	  text {fill: white;}
+		text {
+			// fill: white;
+			font-family: 'Open Sans' !important;
+			font-weight: normal !important;
+		}
 	}
-  
+
 	// Tooltips
 	g:nth-child(10) {
-	  rect {
-		stroke: white;
-	  }
-	  text {
-		fill: rgba(0,0,0,.6);
-		font-family: 'Open Sans' !important;
-	  }
-	  text:nth-child(2) { // Date
-		fill: darkred;
-	  }
+		rect {
+			stroke: white;
+		}
+
+		text {
+			// fill: rgba(0, 0, 0, .6);
+			font-family: 'Open Sans' !important;
+		}
+
+		// text:nth-child(2) {
+		// 	// Date
+		// 	fill: darkred;
+		// }
 	}
-  }
+}
