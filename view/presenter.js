@@ -94,7 +94,7 @@ function prepareAirtables(project, chartPlaceholders, rawData) {
 		document.getElementById(chartPlaceholders.backBtn).style.display = "none";
 		presentGantt(chartPlaceholders,
 		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
-		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
+		height: project.height * 42 + 50, width: 960 }, rawData, rows, project);
 	}
 	curriedPresentGantt();
 	/*
