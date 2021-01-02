@@ -25,4 +25,8 @@ p {
 	.printeronly {
 		display: block;
 	}
+	.divFooter {
+		position: fixed;
+		bottom: 0;
+	}
 }
