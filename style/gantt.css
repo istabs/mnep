@@ -33,4 +33,8 @@
 #chart_placeholder svg g:nth-child(10) text {
   font-family: 'Open Sans' !important;
 }
+
+#chart_placeholder svg g:nth-child(10) text:nth-child(1) {
+  fill: darkred;
+}
 /*# sourceMappingURL=gantt.css.map */
