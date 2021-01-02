@@ -25,11 +25,17 @@ p {
 	body {
 		margin-bottom: 30mm;
 	}
+
 	.printeronly {
 		display: block;
 	}
+
 	.divFooter {
 		position: fixed;
 		bottom: 0;
+	}
+
+	.right {
+		float: right;
 	}
 }
