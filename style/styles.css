@@ -22,9 +22,6 @@ p {
 }
 
 @media print {
-	body {
-		margin-bottom: 30mm;
-	}
 
 	.printeronly {
 		display: block;
@@ -32,7 +29,8 @@ p {
 
 	.divFooter {
 		position: fixed;
-		bottom: 0;
+		bottom: 0px;
+		right: 0px;
 	}
 
 	.right {
