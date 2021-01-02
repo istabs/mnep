@@ -13,6 +13,10 @@
   stroke-width: 0;
 }
 
+#chart_placeholder svg g:nth-child(6) rect {
+  fill: black;
+}
+
 #chart_placeholder svg g:nth-child(8) path {
   fill: rgba(0, 0, 0, 0.2);
 }
