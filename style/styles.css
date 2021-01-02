@@ -40,9 +40,3 @@ p {
 	}
 
 }
-
-@page {
-	@bottom-left {
-		content: counter(page) ' de 'counter(pages);
-	}
-}
