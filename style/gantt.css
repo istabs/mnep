@@ -36,5 +36,6 @@
 
 #chart_placeholder svg g:nth-child(10) text:nth-child(1) {
   fill: darkred;
+  font-weight: bold !important;
 }
 /*# sourceMappingURL=gantt.css.map */
