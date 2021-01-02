@@ -5,7 +5,7 @@
 #chart_placeholder svg g:nth-child(3) text {
   fill: darkred;
   font-family: 'Open Sans' !important;
-  font-weight: normal !important;
+  font-weight: bold !important;
 }
 
 #chart_placeholder svg g:nth-child(3) line {
