@@ -9,12 +9,12 @@
 
 	// Chart Settings
 	g:nth-child(3) {
-		// // Rows Odd
+		// Rows Odd
 		// rect:nth-child(odd) {
 		// 	fill: rgba(0, 0, 0, .1);
 		// }
 
-		// // Rows Even
+		// Rows Even
 		// rect:nth-child(even) {
 		// 	fill: transparent;
 		// }
@@ -33,7 +33,7 @@
 		}
 	}
 
-	// // Arrows
+	// Arrows
 	// g:nth-child(4) {
 	// 	path {
 	// 		stroke-width: 1;
@@ -48,16 +48,16 @@
 		}
 	}
 
-	// // Bars
+	// Bars
 	// g:nth-child(7) {
 	// 	rect:nth-child(1) {
 	// 		fill: darkred;
 	// 	}
 
-	// 	// // Target a specific Bar (First) 
-	// 	// rect {
-	// 	// 	fill: white;
-	// 	// }
+	// Target a specific Bar (First) 
+	// 	rect {
+	// 		fill: white;
+	// 	}
 	// }
 
 	// Percent Complete
