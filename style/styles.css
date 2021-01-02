@@ -23,7 +23,7 @@ p {
 
 @media print {
 	body {
-		max-height: 95%;
+		margin-bottom: 30mm;
 	}
 	.printeronly {
 		display: block;
