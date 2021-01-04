@@ -104,6 +104,43 @@ function prepareAirtables(project, chartPlaceholders, rawData) {
 	*/
 }
 
+function prepareGsheets(project, chartPlaceholders, rawData) {
+	rows = [];
+	rawData.sort((a, b) => Date.parse(a.fields.Inicio[0]) - Date.parse(b.fields.Inicio[0])).forEach(item => {
+		if (! project.isSummarize || (project.isSummarize && project.summary && item.fields[project.summary])) {
+			let actvEnd = new Date(item.fields[project.end])
+			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
+			//let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
+			actvEnd.setDate(actvEnd.getDate() + 1)
+			if (item.fields[project.start] && item.fields[project.end]) {
+				rows.push([
+					item.id, // Task ID
+					item.fields[project.label], // Task Name
+					item.fields[project.group], // Group (string)
+					new Date(item.fields[project.start]), // Start Date
+					actvEnd, // End Date
+					0, // Duration (number)
+					progress, // Percent Complete (number)
+					null, // Dependencies (string / comma separated)
+				]);
+			}
+		}
+	});
+	curriedPresentGantt = () => {
+		document.getElementById(chartPlaceholders.subtitle).textContent = "";
+		document.getElementById(chartPlaceholders.backBtn).style.display = "none";
+		presentGantt(chartPlaceholders,
+		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
+		height: project.height * 42 + 50, width: 960 }, rawData, rows, project);
+	}
+	curriedPresentGantt();
+	/*
+	presentGantt(chartPlaceholders,
+		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
+		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
+	*/
+}
+
 function prepareGroupLabels(rawData, project) {
 	let groupLabels = {};
 	rawData.forEach(item => groupLabels[item['id']] = item.fields[project.label]);
@@ -150,6 +187,16 @@ function airtables1(project, chartPlaceholders) {
 	readAirtablesData(url, project, chartPlaceholders, rawData, prepareAirtables);
 }
 
+function gsheets1(project, chartPlaceholders) {
+	document.getElementById(chartPlaceholders.chart).innerHTML = "";
+	document.getElementById(chartPlaceholders.title).textContent = project.name;
+	document.getElementById(chartPlaceholders.subtitle).textContent = "";
+	document.getElementById(chartPlaceholders.backBtn).style.display = "none";
+	let url = project.url;
+	readGsheetsData(url, project, chartPlaceholders, rawData, prepareGsheets);
+}
+
 var parsers = {
 	"AirTables:airtables1": airtables1,
+	"GoogleSheets:gsheets1": gsheets1
 }
