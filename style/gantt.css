@@ -3,7 +3,7 @@
 }
 
 #chart_placeholder svg g:nth-child(3) text {
-  fill: darkred;
+  fill: black;
   font-family: 'Sans Open' !important;
   font-weight: bold !important;
 }
