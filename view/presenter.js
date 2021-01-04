@@ -193,7 +193,7 @@ function gsheets1(project, chartPlaceholders) {
 	document.getElementById(chartPlaceholders.subtitle).textContent = "";
 	document.getElementById(chartPlaceholders.backBtn).style.display = "none";
 	let url = project.url;
-	readGsheetsData(url, project, chartPlaceholders, rawData, prepareGsheets);
+	readGoogleSheetsData(url, project, chartPlaceholders, rawData, prepareGsheets);
 }
 
 var parsers = {

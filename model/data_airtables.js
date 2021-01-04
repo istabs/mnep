@@ -74,3 +74,18 @@ function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
 		}
 	});
 }
+
+function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
+	$.ajax({
+		url: url,
+		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
+		success: (rawData) => {
+			rawData.records.forEach(record => acc.push(record))
+			if (rawData.offset) {
+				readAirtablesData(url + '?offset=' + rawData.offset, project, chartPlaceholders, acc, callback);
+				return;
+			}
+			callback(project, chartPlaceholders, acc);
+		}
+	});
+}
