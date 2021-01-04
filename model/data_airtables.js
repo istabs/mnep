@@ -7,6 +7,8 @@ function Project(snap) {
 	this.pattern       = snap.child('pattern').val();
 	this.authorization = snap.child('credentials').child('authorization').val();
 	this.url           = snap.child('credentials').child('url').val();
+	this.clientId      = snap.child('credentials').child('clientId').val();
+	this.secret        = snap.child('credentials').child('secret').val();
 	this.key           = snap.child('credentials').child('key').val();
 	this.table         = snap.child('details').child('table').val();
 	this.maptype       = snap.child('details').child('maptype').val();
