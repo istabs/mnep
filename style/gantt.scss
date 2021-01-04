@@ -1,9 +1,3 @@
-body,
-text,
-#loader {
-	font-family: 'Sans Open' !important;
-}
-
 #chart_placeholder svg {
 
 	// Background Color
@@ -28,7 +22,7 @@ text,
 		text {
 			// Horizontal Labels
 			fill: black;
-			font-family: 'Sans Open' !important;
+			font-family: sans-serif !important;
 			font-weight: bold !important;
 		}
 
