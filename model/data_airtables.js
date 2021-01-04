@@ -6,9 +6,6 @@ function Project(snap) {
 	this.name          = snap.child('name').val();
 	this.pattern       = snap.child('pattern').val();
 	this.authorization = snap.child('credentials').child('authorization').val();
-	this.url           = snap.child('credentials').child('url').val();
-	this.clientId      = snap.child('credentials').child('clientId').val();
-	this.secret        = snap.child('credentials').child('secret').val();
 	this.key           = snap.child('credentials').child('key').val();
 	this.table         = snap.child('details').child('table').val();
 	this.maptype       = snap.child('details').child('maptype').val();
@@ -22,6 +19,9 @@ function Project(snap) {
 	this.link          = snap.child('details').child('mapping').child('link').val();
 	this.height        = snap.child('details').child('height').val();
 	this.isSummarize   = snap.child('details').child('isSummarize').val();
+	this.url           = snap.child('credentials').child('url').val();
+	this.clientId      = snap.child('credentials').child('clientId').val();
+	this.secret        = snap.child('credentials').child('secret').val();
 }
 
 function MngdUser(user) {
