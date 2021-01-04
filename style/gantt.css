@@ -4,7 +4,7 @@
 
 #chart_placeholder svg g:nth-child(3) text {
   fill: black;
-  font-family: 'sans-serif open' !important;
+  font-family: 'Sans Open' !important;
   font-weight: bold !important;
 }
 
@@ -22,7 +22,7 @@
 }
 
 #chart_placeholder svg g:nth-child(9) text {
-  font-family: 'sans-serif open' !important;
+  font-family: 'Sans Open' !important;
   font-weight: normal !important;
 }
 
@@ -31,7 +31,7 @@
 }
 
 #chart_placeholder svg g:nth-child(10) text {
-  font-family: 'sans-serif open' !important;
+  font-family: 'Sans Open' !important;
 }
 
 #chart_placeholder svg g:nth-child(10) text:nth-child(1) {
