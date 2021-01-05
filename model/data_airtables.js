@@ -105,7 +105,7 @@ function ginit() {
 	gapi.load('auth2', function() {
 		/* Ready. Make a call to gapi.auth2.init or some other API */
 		url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
-		var clientId = project.clientId;
+		var clientId = '1027876211335-93p0ngrnrnb2tmt8hbadhchvj77r23kf.apps.googleusercontent.com';
 		var scopes = 'https://www.googleapis.com/auth/spreadsheets';
 		gapi.auth.authorize(
 			{client_id: clientId, scope: scopes, immediate: true},
