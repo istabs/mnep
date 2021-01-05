@@ -172,6 +172,7 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 		beforeSend: (xhr) => {
 			xhr.setRequestHeader("Authorization", project.authorization);
 		},
+		crossDomain: true,
 		success: (rawData) => {
 			console.log(rawData);
 			rawData.records.forEach(record => acc.push(record))
@@ -180,6 +181,7 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 				return;
 			}
 			callback(project, chartPlaceholders, acc);
-		}
+		},
+		error: (error) => HTMLFormControlsCollection.log(error)
 	});
 }
