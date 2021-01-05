@@ -86,7 +86,7 @@ function makeApiCall(url) {
 	// Note: The below spreadsheet is "Public on the web" and will work
 	// with or without an OAuth token.  For a better test, replace this
 	// URL with a private spreadsheet.
-	var tokenToken = gapi.auth.getToken();
+	var tokenToken = gapi.auth2.getToken();
 	var token = tokenToken.getToken();
 	var tqUrl = url + '/gviz/tq' +
 		'?tqx=responseHandler:handleTqResponse' +
