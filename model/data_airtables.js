@@ -137,6 +137,7 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 
 	$.ajax({
 		url: url,
+		headers: { "Access-Control-Allow-Origin": "*", },
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
 		success: (rawData) => {
 			console.log(rawData);
