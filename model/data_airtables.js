@@ -175,7 +175,7 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 		url: url + '?callback=googleDocCallback',
 		beforeSend: (xhr) => {
 			xhr.setRequestHeader("Authorization", project.authorization);
-			xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+			//xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 		},
 		crossDomain: true,
 		success: (rawData) => {
