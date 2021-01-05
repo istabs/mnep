@@ -139,6 +139,7 @@ function updateSigninStatus(isSignedIn) {
 		listMajors();
 	} else {
 		console.log('Signed Out');
+		handleAuthClick();
 		//authorizeButton.style.display = 'block';
 		//signoutButton.style.display = 'none';
 	}
