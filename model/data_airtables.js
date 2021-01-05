@@ -135,37 +135,37 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 	gapi.auth2.authorize( {client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
 	*/
 	var createCORSRequest = function(method, url) {
-		var xhr = new XMLHttpRequest();
-		if ("withCredentials" in xhr) {
+		var xhr1 = new XMLHttpRequest();
+		if ("withCredentials" in xhr1) {
 		  // Most browsers.
-		  xhr.open(method, url, true);
+		  xhr1.open(method, url, true);
 		} else if (typeof XDomainRequest != "undefined") {
 		  // IE8 & IE9
-		  xhr = new XDomainRequest();
-		  xhr.open(method, url);
+		  xhr1 = new XDomainRequest();
+		  xhr1.open(method, url);
 		} else {
 		  // CORS not supported.
-		  xhr = null;
+		  xhr1 = null;
 		}
-		return xhr;
+		return xhr1;
 	  };
 	  
 	  var url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
 	  var method = 'GET';
-	  var xhr = createCORSRequest(method, url);
+	  var xhr2 = createCORSRequest(method, url);
 	  
-	  xhr.onload = function(data) {
+	  xhr2.onload = function(data) {
 		// Success code goes here.
 		console.log(data)
 	  };
 	  
-	  xhr.onerror = function(error) {
+	  xhr2.onerror = function(error) {
 		// Error code goes here.
 		console.log(error)
 	  };
 	  
-	  xhr.withCredentials = true;
-	  xhr.send();
+	  xhr2.withCredentials = true;
+	  xhr2.send();
 
 	$.ajax({
 		url: url,
