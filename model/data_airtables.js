@@ -148,24 +148,24 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 		  xhr1 = null;
 		}
 		return xhr1;
-	  };
-	  
-	  var url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
-	  var method = 'GET';
-	  var xhr2 = createCORSRequest(method, url);
-	  
-	  xhr2.onload = function(data) {
+	};
+	
+	var url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
+	var method = 'GET';
+	var xhr2 = createCORSRequest(method, url);
+	
+	xhr2.onload = function(data) {
 		// Success code goes here.
 		console.log(data)
-	  };
-	  
-	  xhr2.onerror = function(error) {
+	};
+	
+	xhr2.onerror = function(error) {
 		// Error code goes here.
 		console.log(error)
-	  };
-	  
-	  xhr2.withCredentials = true;
-	  xhr2.send();
+	};
+	
+	xhr2.withCredentials = true;
+	//xhr2.send();
 
 	$.ajax({
 		url: url,
