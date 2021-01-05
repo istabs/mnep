@@ -152,6 +152,7 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 	
 	var url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
 	var method = 'GET';
+/*
 	var xhr2 = createCORSRequest(method, url);
 	
 	xhr2.onload = function(data) {
@@ -166,7 +167,7 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 	
 	xhr2.withCredentials = true;
 	//xhr2.send();
-
+*/
 	$.ajax({
 		url: url,
 		beforeSend: (xhr) => {
