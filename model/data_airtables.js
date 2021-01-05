@@ -140,7 +140,7 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 		beforeSend: (xhr) => {
 			xhr.setRequestHeader("Authorization", project.authorization);
 			xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-			xhr.setRequestHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+			xhr.setRequestHeader("Access-Control-Allow-Methods", "GET");
 			xhr.setRequestHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 		},
 		success: (rawData) => {
