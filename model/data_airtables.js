@@ -168,8 +168,11 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 	xhr2.withCredentials = true;
 	//xhr2.send();
 */
+
+	window.googleDocCallback = function () { return true; };
+
 	$.ajax({
-		url: url,
+		url: url + '?callback=googleDocCallback',
 		beforeSend: (xhr) => {
 			xhr.setRequestHeader("Authorization", project.authorization);
 			xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
