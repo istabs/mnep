@@ -3,31 +3,31 @@ var projects = {};
 var rawData = [];
 
 function Project(snap) {
-	this.name          = snap.child('name').val();
-	this.pattern       = snap.child('pattern').val();
+	this.name = snap.child('name').val();
+	this.pattern = snap.child('pattern').val();
 	this.authorization = snap.child('credentials').child('authorization').val();
-	this.key           = snap.child('credentials').child('key').val();
-	this.table         = snap.child('details').child('table').val();
-	this.maptype       = snap.child('details').child('maptype').val();
-	this.label         = snap.child('details').child('mapping').child('label').val();
-	this.start         = snap.child('details').child('mapping').child('start').val();
-	this.end           = snap.child('details').child('mapping').child('end').val();
-	this.group         = snap.child('details').child('mapping').child('group').val();
-	this.parent        = snap.child('details').child('mapping').child('parent').val();
-	this.progress      = snap.child('details').child('mapping').child('progress').val();
-	this.summary       = snap.child('details').child('mapping').child('summary').val();
-	this.link          = snap.child('details').child('mapping').child('link').val();
-	this.height        = snap.child('details').child('height').val();
-	this.isSummarize   = snap.child('details').child('isSummarize').val();
-	this.url           = snap.child('credentials').child('url').val();
-	this.clientId      = snap.child('credentials').child('clientId').val();
-	this.secret        = snap.child('credentials').child('secret').val();
+	this.key = snap.child('credentials').child('key').val();
+	this.table = snap.child('details').child('table').val();
+	this.maptype = snap.child('details').child('maptype').val();
+	this.label = snap.child('details').child('mapping').child('label').val();
+	this.start = snap.child('details').child('mapping').child('start').val();
+	this.end = snap.child('details').child('mapping').child('end').val();
+	this.group = snap.child('details').child('mapping').child('group').val();
+	this.parent = snap.child('details').child('mapping').child('parent').val();
+	this.progress = snap.child('details').child('mapping').child('progress').val();
+	this.summary = snap.child('details').child('mapping').child('summary').val();
+	this.link = snap.child('details').child('mapping').child('link').val();
+	this.height = snap.child('details').child('height').val();
+	this.isSummarize = snap.child('details').child('isSummarize').val();
+	this.url = snap.child('credentials').child('url').val();
+	this.clientId = snap.child('credentials').child('clientId').val();
+	this.secret = snap.child('credentials').child('secret').val();
 }
 
 function MngdUser(user) {
 	this.name = user.name;
 	this.email = user.email;
-	this.key = user.email.replace(new RegExp('\\.','g'), '%2E');
+	this.key = user.email.replace(new RegExp('\\.', 'g'), '%2E');
 	this.basePath = "/sources/users/catalog/";
 
 	this.onDefault = callback => {
@@ -56,7 +56,7 @@ function MngdUser(user) {
 					let project = new Project(snap);
 					projects[project.name] = new Project(snap);
 					projectsLst.push(project)
-				}).then(()=>callback(projectsLst));
+				}).then(() => callback(projectsLst));
 			});
 		});
 	}
@@ -77,112 +77,138 @@ function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
 	});
 }
 
-function handleTqResponse(resp) {
-	//document.write(JSON.stringify(resp));
-	console.log(resp);
+url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
+var ssid = '19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
+var clientId = '1027876211335-93p0ngrnrnb2tmt8hbadhchvj77r23kf.apps.googleusercontent.com';
+var apiKey = 'AIzaSyBLno126jESgr7JzuOADmImv1D0EkBkfNI';
+var scopes = 'https://www.googleapis.com/auth/spreadsheets';
+
+// Client ID and API key from the Developer Console
+var CLIENT_ID = clientId;
+var API_KEY = apiKey;
+
+// Array of API discovery doc URLs for APIs used by the quickstart
+var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+
+//var authorizeButton = document.getElementById('authorize_button');
+//var signoutButton = document.getElementById('signout_button');
+
+/**
+ *  On load, called to load the auth2 library and API client library.
+ */
+function handleClientLoad() {
+	gapi.load('client:auth2', initClient);
 }
 
-function makeApiCall(url) {
-	// Note: The below spreadsheet is "Public on the web" and will work
-	// with or without an OAuth token.  For a better test, replace this
-	// URL with a private spreadsheet.
-	/*
-	var tokenToken = gapi.auth2.getToken();
-	var tqUrl = url + '/gviz/tq' +
-		'?tqx=responseHandler:handleTqResponse' +
-		'&access_token=' + encodeURIComponent(gapi.auth.getToken().access_token);
+/**
+ *  Initializes the API client library and sets up sign-in state
+ *  listeners.
+ */
+function initClient() {
+	gapi.client.init({
+		apiKey: API_KEY,
+		clientId: CLIENT_ID,
+		discoveryDocs: DISCOVERY_DOCS,
+		scope: SCOPES
+	}).then(function () {
+		// Listen for sign-in state changes.
+		gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
-	document.write('<script src="' + tqUrl +'" type="text/javascript"></script>');
-	*/
-}
-
-var url="";
-
-function handleAuthResult(authResult) {
-	makeApiCall(url);
-}
-
-function ginit() {
-/*	gapi.load('auth2', function() {
-		/* Ready. Make a call to gapi.auth2.init or some other API */
-/*		url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
-		var clientId = '1027876211335-93p0ngrnrnb2tmt8hbadhchvj77r23kf.apps.googleusercontent.com';
-		var scopes = 'https://www.googleapis.com/auth/spreadsheets';
-		gapi.auth.authorize(
-			{client_id: clientId, scope: scopes, immediate: true},
-			handleAuthResult);
+		// Handle the initial sign-in state.
+		updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+		//authorizeButton.onclick = handleAuthClick;
+		//signoutButton.onclick = handleSignoutClick;
+	}, function (error) {
+		appendPre(JSON.stringify(error, null, 2));
 	});
-*/
-	url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
-	var clientId = '1027876211335-93p0ngrnrnb2tmt8hbadhchvj77r23kf.apps.googleusercontent.com';
-	var scopes = 'https://www.googleapis.com/auth/spreadsheets';
-	gapi.auth2.init({client_id: clientId, scope: scopes, immediate: true})
-	.then(handleAuthResult, function(error) {
-		console.log(error.message);
-	});
+}
+
+/**
+ *  Called when the signed in status changes, to update the UI
+ *  appropriately. After a sign-in, the API is called.
+ */
+function updateSigninStatus(isSignedIn) {
+	if (isSignedIn) {
+		//authorizeButton.style.display = 'none';
+		//signoutButton.style.display = 'block';
+		console.log('Signed In');
+		listMajors();
+	} else {
+		console.log('Signed Out');
+		//authorizeButton.style.display = 'block';
+		//signoutButton.style.display = 'none';
+	}
+}
+
+/**
+ *  Sign in the user upon button click.
+ */
+function handleAuthClick(event) {
+	gapi.auth2.getAuthInstance().signIn();
+}
+
+/**
+ *  Sign out the user upon button click.
+ */
 /*
-	gapi.auth2.authorize(
-		{client_id: clientId, scope: scopes, immediate: true},
-		handleAuthResult);
+function handleSignoutClick(event) {
+	gapi.auth2.getAuthInstance().signOut();
+}
 */
+
+/**
+ * Append a pre element to the body containing the given message
+ * as its text node. Used to display the results of the API call.
+ *
+ * @param {string} message Text to be placed in pre element.
+ */
+function appendPre(message) {
+	//var pre = document.getElementById('content');
+	//var textContent = document.createTextNode(message + '\n');
+	//pre.appendChild(textContent);
+	console.log(message);
+}
+
+/**
+ * Print the names and majors of students in a sample spreadsheet:
+ * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+ */
+function listMajors() {
+	gapi.client.sheets.spreadsheets.values.get({
+		spreadsheetId: ssid, //'1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
+		range: 'Ctr!B1:F', //'Class Data!A2:E',
+	}).then(function (response) {
+		var range = response.result;
+		if (range.values.length > 0) {
+			appendPre('Name, Major:');
+			for (i = 0; i < range.values.length; i++) {
+				var row = range.values[i];
+				// Print columns A and E, which correspond to indices 0 and 4.
+				appendPre(row[0] + ', ' + row[4]);
+			}
+		} else {
+			appendPre('No data found.');
+		}
+	}, function (response) {
+		appendPre('Error: ' + response.result.error.message);
+	});
 }
 
 function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
+
+	initClient();
+
 	/*
-	url = url_;
-	var clientId = project.clientId;
-	var scopes = 'https://www.googleapis.com/auth/spreadsheets';
-	gapi.auth2.authorize( {client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
-	*/
-	var createCORSRequest = function(method, url) {
-		var xhr1 = new XMLHttpRequest();
-		if ("withCredentials" in xhr1) {
-		  // Most browsers.
-		  xhr1.open(method, url, true);
-		} else if (typeof XDomainRequest != "undefined") {
-		  // IE8 & IE9
-		  xhr1 = new XDomainRequest();
-		  xhr1.open(method, url);
-		} else {
-		  // CORS not supported.
-		  xhr1 = null;
-		}
-		return xhr1;
-	};
-	
-	var url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
-	var method = 'GET';
-/*
-	var xhr2 = createCORSRequest(method, url);
-	
-	xhr2.onload = function(data) {
-		// Success code goes here.
-		console.log(data)
-	};
-	
-	xhr2.onerror = function(error) {
-		// Error code goes here.
-		console.log(error)
-	};
-	
-	xhr2.withCredentials = true;
-	//xhr2.send();
-*/
-
-	window.googleDocCallback = function () { return true; };
-	var key = "1Cj1SSI-GHCRhIAK-LYurwVrE0FOyOJTpUnoHNNPieYo",  // key for demo spreadsheet
-    query = "&tqx=out:csv",                       // query returns the first sheet as CSV
-    url = "https://spreadsheets.google.com/tq?key=" + key + query;  // CORS-enabled server
-
 	$.ajax({
 		url: url + '?callback=googleDocCallback',
-		/*
 		beforeSend: (xhr) => {
 			xhr.setRequestHeader("Authorization", project.authorization);
 			//xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 		},
-		*/
-		//crossDomain: true,
 		success: (rawData) => {
 			console.log(rawData);
 			rawData.records.forEach(record => acc.push(record))
@@ -196,4 +222,5 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 			console.log(error);
 		}
 	});
+	*/
 }
