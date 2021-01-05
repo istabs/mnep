@@ -107,6 +107,7 @@ function readGoogleSheetsData(url_, project, chartPlaceholders, acc, callback) {
 		{client_id: clientId, scope: scopes, immediate: true},
 		handleAuthResult);
 
+		/*
 	$.ajax({
 		url: url,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
@@ -119,4 +120,5 @@ function readGoogleSheetsData(url_, project, chartPlaceholders, acc, callback) {
 			callback(project, chartPlaceholders, acc);
 		}
 	});
+	*/
 }
