@@ -171,6 +171,7 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 		url: url,
 		beforeSend: (xhr) => {
 			xhr.setRequestHeader("Authorization", project.authorization);
+			xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 		},
 		crossDomain: true,
 		success: (rawData) => {
@@ -182,6 +183,8 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 			}
 			callback(project, chartPlaceholders, acc);
 		},
-		error: (error) => HTMLFormControlsCollection.log(error)
+		error: (error) => {
+			console.log(error);
+		}
 	});
 }
