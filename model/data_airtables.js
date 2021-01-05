@@ -77,7 +77,36 @@ function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
 	});
 }
 
-function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
+function handleTqResponse(resp) {
+	//document.write(JSON.stringify(resp));
+	console.log(resp);
+}
+
+function makeApiCall(url) {
+	// Note: The below spreadsheet is "Public on the web" and will work
+	// with or without an OAuth token.  For a better test, replace this
+	// URL with a private spreadsheet.
+	var tqUrl = url + '/gviz/tq' +
+		'?tqx=responseHandler:handleTqResponse' +
+		'&access_token=' + encodeURIComponent(gapi.auth.getToken().access_token);
+
+	document.write('<script src="' + tqUrl +'" type="text/javascript"></script>');
+}
+
+var url="";
+
+function handleAuthResult(authResult) {
+	makeApiCall(url);
+}
+
+function readGoogleSheetsData(url_, project, chartPlaceholders, acc, callback) {
+	url = url_;
+	var clientId = project.clientId;
+	var scopes = 'https://www.googleapis.com/auth/spreadsheets';
+	gapi.auth.authorize(
+		{client_id: clientId, scope: scopes, immediate: true},
+		handleAuthResult);
+
 	$.ajax({
 		url: url,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
