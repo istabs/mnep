@@ -86,6 +86,8 @@ function makeApiCall(url) {
 	// Note: The below spreadsheet is "Public on the web" and will work
 	// with or without an OAuth token.  For a better test, replace this
 	// URL with a private spreadsheet.
+	var tokenToken = gapi.auth.getToken();
+	var token = tokenToken.getToken();
 	var tqUrl = url + '/gviz/tq' +
 		'?tqx=responseHandler:handleTqResponse' +
 		'&access_token=' + encodeURIComponent(gapi.auth.getToken().access_token);
@@ -103,11 +105,14 @@ function readGoogleSheetsData(url_, project, chartPlaceholders, acc, callback) {
 	url = url_;
 	var clientId = project.clientId;
 	var scopes = 'https://www.googleapis.com/auth/spreadsheets';
+	/*
 	gapi.auth.authorize(
 		{client_id: clientId, scope: scopes, immediate: true},
 		handleAuthResult);
+	*/
+	makeApiCall(url);
 
-		/*
+	/*
 	$.ajax({
 		url: url,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
