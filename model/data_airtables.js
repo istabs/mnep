@@ -101,16 +101,25 @@ function handleAuthResult(authResult) {
 	makeApiCall(url);
 }
 
+function ginit() {
+	gapi.load('auth2', function() {
+		/* Ready. Make a call to gapi.auth2.init or some other API */
+		url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
+		var clientId = project.clientId;
+		var scopes = 'https://www.googleapis.com/auth/spreadsheets';
+		gapi.auth.authorize(
+			{client_id: clientId, scope: scopes, immediate: true},
+			handleAuthResult);
+	});
+}
+
 function readGoogleSheetsData(url_, project, chartPlaceholders, acc, callback) {
 	url = url_;
 	var clientId = project.clientId;
 	var scopes = 'https://www.googleapis.com/auth/spreadsheets';
-	/*
 	gapi.auth.authorize(
 		{client_id: clientId, scope: scopes, immediate: true},
 		handleAuthResult);
-	*/
-	makeApiCall(url);
 
 	/*
 	$.ajax({
