@@ -170,14 +170,19 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 */
 
 	window.googleDocCallback = function () { return true; };
+	var key = "1Cj1SSI-GHCRhIAK-LYurwVrE0FOyOJTpUnoHNNPieYo",  // key for demo spreadsheet
+    query = "&tqx=out:csv",                       // query returns the first sheet as CSV
+    url = "https://spreadsheets.google.com/tq?key=" + key + query;  // CORS-enabled server
 
 	$.ajax({
 		url: url + '?callback=googleDocCallback',
+		/*
 		beforeSend: (xhr) => {
 			xhr.setRequestHeader("Authorization", project.authorization);
 			//xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 		},
-		crossDomain: true,
+		*/
+		//crossDomain: true,
 		success: (rawData) => {
 			console.log(rawData);
 			rawData.records.forEach(record => acc.push(record))
