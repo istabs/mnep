@@ -134,14 +134,43 @@ function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 	var scopes = 'https://www.googleapis.com/auth/spreadsheets';
 	gapi.auth2.authorize( {client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
 	*/
+	var createCORSRequest = function(method, url) {
+		var xhr = new XMLHttpRequest();
+		if ("withCredentials" in xhr) {
+		  // Most browsers.
+		  xhr.open(method, url, true);
+		} else if (typeof XDomainRequest != "undefined") {
+		  // IE8 & IE9
+		  xhr = new XDomainRequest();
+		  xhr.open(method, url);
+		} else {
+		  // CORS not supported.
+		  xhr = null;
+		}
+		return xhr;
+	  };
+	  
+	  var url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
+	  var method = 'GET';
+	  var xhr = createCORSRequest(method, url);
+	  
+	  xhr.onload = function(data) {
+		// Success code goes here.
+		console.log(data)
+	  };
+	  
+	  xhr.onerror = function(error) {
+		// Error code goes here.
+		console.log(error)
+	  };
+	  
+	  xhr.withCredentials = true;
+	  xhr.send();
 
 	$.ajax({
 		url: url,
 		beforeSend: (xhr) => {
 			xhr.setRequestHeader("Authorization", project.authorization);
-			xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-			xhr.setRequestHeader("Access-Control-Allow-Methods", "GET");
-			xhr.setRequestHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 		},
 		success: (rawData) => {
 			console.log(rawData);
