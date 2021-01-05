@@ -125,17 +125,19 @@ function ginit() {
 */
 }
 
-function readGoogleSheetsData(url_, project, chartPlaceholders, acc, callback) {
+function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
+	/*
 	url = url_;
 	var clientId = project.clientId;
 	var scopes = 'https://www.googleapis.com/auth/spreadsheets';
 	gapi.auth2.authorize( {client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+	*/
 
-	/*
 	$.ajax({
 		url: url,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
 		success: (rawData) => {
+			console.log(rawData);
 			rawData.records.forEach(record => acc.push(record))
 			if (rawData.offset) {
 				readAirtablesData(url + '?offset=' + rawData.offset, project, chartPlaceholders, acc, callback);
@@ -144,5 +146,4 @@ function readGoogleSheetsData(url_, project, chartPlaceholders, acc, callback) {
 			callback(project, chartPlaceholders, acc);
 		}
 	});
-	*/
 }
