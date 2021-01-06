@@ -201,7 +201,7 @@ function listMajors() {
 
 function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 
-	initClient();
+	handleClientLoad();
 
 	/*
 	$.ajax({
