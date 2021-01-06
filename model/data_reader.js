@@ -137,37 +137,44 @@ function gSheetsReadWorker(project, chartPlaceholders, rawData, callback) {
 		response => onError(response));
 }
 
-function GSheetsCtrRecord(record) {
-	this._id = record.findIndex(item => item === "ID");
-	this._name = record.findIndex(item => item === "Descrição");
-	this._start = record.findIndex(item => item === "Inicio");
-	this._duration = record.findIndex(item => item === "Duração");
-	this._end = record.findIndex(item => item === "Fim");
-	this._group = record.findIndex(item => item === "Grupo");
-	this._predecessor = record.findIndex(item => item === "Predecessor");
-	this._progress = record.findIndex(item => item === "Progresso");
-	this._ccp = record.findIndex(item => item === "CCP");
-	this._contingency = record.findIndex(item => item === "Contingência");
-	this._budget = record.findIndex(item => item === "Orçamento");
-	this._link = record.findIndex(item => item === "Link");
+class GSheetsCtrRecord {
 
-	this.RawDataRecord = function (record) {
-		this.id = record[parent._id];
-		this.name = record[parent._name];
-		this.start = record[parent._start];
-		this.duration = record[parent._duration];
-		this.end = record[parent._end];
-		this.group = record[parent._group];
-		this.predecessor = record[parent._predecessor];
-		this.progress = record[parent._progress];
-		this.ccp = record[parent._ccp];
-		this.contingency = record[parent._contingency];
-		this.budget = record[parent._budget];
-		this.link = record[parent._link];
+	constructor (record) {
+		this._id = record.findIndex(item => item === "ID");
+		this._name = record.findIndex(item => item === "Descrição");
+		this._start = record.findIndex(item => item === "Inicio");
+		this._duration = record.findIndex(item => item === "Duração");
+		this._end = record.findIndex(item => item === "Fim");
+		this._group = record.findIndex(item => item === "Grupo");
+		this._predecessor = record.findIndex(item => item === "Predecessor");
+		this._progress = record.findIndex(item => item === "Progresso");
+		this._ccp = record.findIndex(item => item === "CCP");
+		this._contingency = record.findIndex(item => item === "Contingência");
+		this._budget = record.findIndex(item => item === "Orçamento");
+		this._link = record.findIndex(item => item === "Link");
 	}
 
-	this.getFields = function (record) {
-		return new parent.RawDataRecord(record);
+	static get RawDataRecord() {
+		return class RawDataRecord {
+			constructor (record) {
+				this.id = record[parent._id];
+				this.name = record[parent._name];
+				this.start = record[parent._start];
+				this.duration = record[parent._duration];
+				this.end = record[parent._end];
+				this.group = record[parent._group];
+				this.predecessor = record[parent._predecessor];
+				this.progress = record[parent._progress];
+				this.ccp = record[parent._ccp];
+				this.contingency = record[parent._contingency];
+				this.budget = record[parent._budget];
+				this.link = record[parent._link];
+			}
+		};
+	}
+
+	getFields = function (record) {
+		return new RawDataRecord(record);
 	}
 }
 
