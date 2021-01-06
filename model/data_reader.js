@@ -174,10 +174,10 @@ function GSheetsCtrRecord(record) {
 function onResult(project, chartPlaceholders, rawData, callback, response) {
 	var range = response.result.values;
 	var rawData = [];
-	if (range.values.length > 0) {
-		let rawRecord = new GSheetsCtrRecord(range.values[0]);
-		for (i = 1; i < range.values.length; i++) {
-			var row = rawRecord.getFields(range.values[i]);
+	if (range.length > 0) {
+		let rawRecord = new GSheetsCtrRecord(range[0]);
+		for (i = 1; i < range.length; i++) {
+			var row = rawRecord.getFields(range[i]);
 			console.log(row);
 			rawData.push(row);
 		}
