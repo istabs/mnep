@@ -133,8 +133,8 @@ function gSheetsReadWorker(project, chartPlaceholders, rawData, callback) {
 		spreadsheetId: project.spreadsheetId,
 		range: project.table + '!' + project.range,
 	}).then(
-		(response) => onResult(project, chartPlaceholders, rawData, callback, response),
-		onError(response));
+		response => onResult(project, chartPlaceholders, rawData, callback, response),
+		response => onError(response));
 }
 
 function onResult(project, chartPlaceholders, rawData, callback, response) {
