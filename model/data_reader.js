@@ -166,7 +166,7 @@ function GSheetsCtrRecord(record) {
 		this.link = record[this.link];
 	}
 
-	function getFields(record) {
+	this.getFields = function (record) {
 		return new RawData(record);
 	}
 }
