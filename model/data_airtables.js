@@ -19,10 +19,6 @@ function Project(snap) {
 	this.link = snap.child('details').child('mapping').child('link').val();
 	this.height = snap.child('details').child('height').val();
 	this.isSummarize = snap.child('details').child('isSummarize').val();
-	this.apiKey = snap.child('credentials').child('apiKey').val();
-	this.clientId = snap.child('credentials').child('clientId').val();
-	this.scopes = snap.child('credentials').child('scopes').val();
-	this.spreadsheetId = snap.child('credentials').child('spreadsheetId').val();
 }
 
 function ProjectGSheets(snap) {
@@ -30,9 +26,11 @@ function ProjectGSheets(snap) {
 	this.pattern       = snap.child('pattern').val();
 	this.apiKey        = snap.child('credentials').child('apiKey').val();
 	this.clientId      = snap.child('credentials').child('clientId').val();
-	this.scopes        = snap.child('credentials').child('scopes').val();
 	this.spreadsheetId = snap.child('credentials').child('spreadsheetId').val();
+	this.scopes        = snap.child('credentials').child('scopes').val();
+	this.discoveryDocs = snap.child('credentials').child('discoveryDocs').val();
 	this.table         = snap.child('details').child('table').val();
+	this.range         = snap.child('details').child('range').val();
 	this.maptype       = snap.child('details').child('maptype').val();
 	this.label         = snap.child('details').child('mapping').child('label').val();
 	this.start         = snap.child('details').child('mapping').child('start').val();
@@ -104,135 +102,55 @@ function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
 	});
 }
 
-url = 'https://docs.google.com/spreadsheets/d/19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
-var ssid = '19D2cU8pCGkN4sl5DDXjLlYbd8LoNDHKmEJJ7l2cs1lY';
-var clientId = '1027876211335-93p0ngrnrnb2tmt8hbadhchvj77r23kf.apps.googleusercontent.com';
-var apiKey = 'AIzaSyBLno126jESgr7JzuOADmImv1D0EkBkfNI';
-var scopes = 'https://www.googleapis.com/auth/spreadsheets';
-
-// Client ID and API key from the Developer Console
-var CLIENT_ID = clientId;
-var API_KEY = apiKey;
-
-// Array of API discovery doc URLs for APIs used by the quickstart
-var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
-
-// Authorization scopes required by the API; multiple scopes can be
-// included, separated by spaces.
-var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
-
-//var authorizeButton = document.getElementById('authorize_button');
-//var signoutButton = document.getElementById('signout_button');
-
-/**
- *  On load, called to load the auth2 library and API client library.
- */
-function handleClientLoad() {
-	gapi.load('client:auth2', initClient);
-}
-
-/**
- *  Initializes the API client library and sets up sign-in state
- *  listeners.
- */
-function initClient(project, chartPlaceholders, acc) {
+function initClient(project, chartPlaceholders, acc, callback) {
 	gapi.client.init({
-		apiKey: API_KEY,
-		clientId: CLIENT_ID,
-		discoveryDocs: DISCOVERY_DOCS,
-		scope: SCOPES
+		apiKey: project.apiKey,
+		clientId: project.clientId,
+		discoveryDocs: project.discoveryDocs,
+		scope: project.scopes
 	}).then(function () {
-		// Listen for sign-in state changes.
-		gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-		// Handle the initial sign-in state.
-		updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-		//authorizeButton.onclick = handleAuthClick;
-		//signoutButton.onclick = handleSignoutClick;
+		gapi.auth2.getAuthInstance().isSignedIn.listen((isSignedIn) => {
+			updateSigninStatus(project, chartPlaceholders, acc, callback, isSignedIn);
+		});
+		let isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
+		updateSigninStatus(project, chartPlaceholders, acc, callback, isSignedIn);
 	}, function (error) {
-		appendPre(JSON.stringify(error, null, 2));
+		console.log(JSON.stringify(error, null, 2));
 	});
 }
 
-/**
- *  Called when the signed in status changes, to update the UI
- *  appropriately. After a sign-in, the API is called.
- */
-function updateSigninStatus(isSignedIn) {
+var bootstrapGSheets = (project, chartPlaceholders, acc, callback) => {
+	gapi.load('client:auth2', () => initClient(project, chartPlaceholders, acc, callback));
+}
+
+function updateSigninStatus(project, chartPlaceholders, acc, callback, isSignedIn) {
 	if (isSignedIn) {
-		//authorizeButton.style.display = 'none';
-		//signoutButton.style.display = 'block';
-		console.log('Signed In');
-		listMajors();
+		work(project, chartPlaceholders, rawData);
 	} else {
-		console.log('Signed Out');
-		handleAuthClick();
-		//authorizeButton.style.display = 'block';
-		//signoutButton.style.display = 'none';
+		bootstrapGSheets(project, chartPlaceholders, acc, callback);
 	}
 }
 
-/**
- * Append a pre element to the body containing the given message
- * as its text node. Used to display the results of the API call.
- *
- * @param {string} message Text to be placed in pre element.
- */
-function appendPre(message) {
-	//var pre = document.getElementById('content');
-	//var textContent = document.createTextNode(message + '\n');
-	//pre.appendChild(textContent);
-	console.log(message);
-}
-
-/**
- * Print the names and majors of students in a sample spreadsheet:
- * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
- */
-function listMajors() {
+function work(project, chartPlaceholders, callback) {
 	gapi.client.sheets.spreadsheets.values.get({
-		spreadsheetId: ssid, //'1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-		range: 'Ctr!B1:F', //'Class Data!A2:E',
+		spreadsheetId: project.spreadsheetId,
+		range: project.table + '!' + project.range,
 	}).then(function (response) {
 		var range = response.result;
 		if (range.values.length > 0) {
-			appendPre('Name, Major:');
+			console.log('Name, Major:');
 			for (i = 0; i < range.values.length; i++) {
 				var row = range.values[i];
-				// Print columns A and E, which correspond to indices 0 and 4.
-				appendPre(row[0] + ', ' + row[4]);
+				console.log(row[0] + ', ' + row[4]);
 			}
 		} else {
-			appendPre('No data found.');
+			console.log('No data found.');
 		}
 	}, function (response) {
-		appendPre('Error: ' + response.result.error.message);
+		console.log('Error: ' + response.result.error.message);
 	});
 }
 
 function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
-
-	gapi.load('client:auth2', () => initClient(project, chartPlaceholders, acc))
-
-	/*
-	$.ajax({
-		url: url + '?callback=googleDocCallback',
-		beforeSend: (xhr) => {
-			xhr.setRequestHeader("Authorization", project.authorization);
-			//xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-		},
-		success: (rawData) => {
-			console.log(rawData);
-			rawData.records.forEach(record => acc.push(record))
-			if (rawData.offset) {
-				readAirtablesData(url + '?offset=' + rawData.offset, project, chartPlaceholders, acc, callback);
-				return;
-			}
-			callback(project, chartPlaceholders, acc);
-		},
-		error: (error) => {
-			console.log(error);
-		}
-	});
-	*/
+	bootstrapGSheets(project, chartPlaceholders, acc, callback);
 }
