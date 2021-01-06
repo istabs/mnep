@@ -151,7 +151,7 @@ function GSheetsCtrRecord(record) {
 	this._budget = record.findIndex(item => item === "Orçamento");
 	this._link = record.findIndex(item => item === "Link");
 
-	function RawDataRecord(record) {
+	this.RawDataRecord = function (record) {
 		this.id = record[this._id];
 		this.name = record[this._name];
 		this.start = record[this._start];
@@ -167,7 +167,7 @@ function GSheetsCtrRecord(record) {
 	}
 
 	this.getFields = function (record) {
-		return new RawDataRecord(record);
+		return new this.RawDataRecord(record);
 	}
 }
 
