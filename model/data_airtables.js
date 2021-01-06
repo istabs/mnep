@@ -138,7 +138,6 @@ function work(project, chartPlaceholders, callback) {
 	}).then(function (response) {
 		var range = response.result;
 		if (range.values.length > 0) {
-			console.log('Name, Major:');
 			for (i = 0; i < range.values.length; i++) {
 				var row = range.values[i];
 				console.log(row[0] + ', ' + row[4]);
