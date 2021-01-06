@@ -152,18 +152,18 @@ function GSheetsCtrRecord(record) {
 	this._link = record.findIndex(item => item === "Link");
 
 	this.RawDataRecord = function (record) {
-		this.id = record[this._id];
-		this.name = record[this._name];
-		this.start = record[this._start];
-		this.duration = record[this._duration];
-		this.end = record[this._end];
-		this.group = record[this._group];
-		this.predecessor = record[this._predecessor];
-		this.progress = record[this._progress];
-		this.ccp = record[this._ccp];
-		this.contingency = record[this._contingency];
-		this.budget = record[this._budget];
-		this.link = record[this._link];
+		this.id = record[parent._id];
+		this.name = record[parent._name];
+		this.start = record[parent._start];
+		this.duration = record[parent._duration];
+		this.end = record[parent._end];
+		this.group = record[parent._group];
+		this.predecessor = record[parent._predecessor];
+		this.progress = record[parent._progress];
+		this.ccp = record[parent._ccp];
+		this.contingency = record[parent._contingency];
+		this.budget = record[parent._budget];
+		this.link = record[parent._link];
 	}
 
 	this.getFields = function (record) {
