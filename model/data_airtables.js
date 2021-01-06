@@ -19,9 +19,31 @@ function Project(snap) {
 	this.link = snap.child('details').child('mapping').child('link').val();
 	this.height = snap.child('details').child('height').val();
 	this.isSummarize = snap.child('details').child('isSummarize').val();
-	this.url = snap.child('credentials').child('url').val();
+	this.apiKey = snap.child('credentials').child('apiKey').val();
 	this.clientId = snap.child('credentials').child('clientId').val();
-	this.secret = snap.child('credentials').child('secret').val();
+	this.scopes = snap.child('credentials').child('scopes').val();
+	this.spreadsheetId = snap.child('credentials').child('spreadsheetId').val();
+}
+
+function ProjectGSheets(snap) {
+	this.name          = snap.child('name').val();
+	this.pattern       = snap.child('pattern').val();
+	this.apiKey        = snap.child('credentials').child('apiKey').val();
+	this.clientId      = snap.child('credentials').child('clientId').val();
+	this.scopes        = snap.child('credentials').child('scopes').val();
+	this.spreadsheetId = snap.child('credentials').child('spreadsheetId').val();
+	this.table         = snap.child('details').child('table').val();
+	this.maptype       = snap.child('details').child('maptype').val();
+	this.label         = snap.child('details').child('mapping').child('label').val();
+	this.start         = snap.child('details').child('mapping').child('start').val();
+	this.end           = snap.child('details').child('mapping').child('end').val();
+	this.group         = snap.child('details').child('mapping').child('group').val();
+	this.parent        = snap.child('details').child('mapping').child('parent').val();
+	this.progress      = snap.child('details').child('mapping').child('progress').val();
+	this.summary       = snap.child('details').child('mapping').child('summary').val();
+	this.link          = snap.child('details').child('mapping').child('link').val();
+	this.height        = snap.child('details').child('height').val();
+	this.isSummarize   = snap.child('details').child('isSummarize').val();
 }
 
 function MngdUser(user) {
@@ -44,6 +66,11 @@ function MngdUser(user) {
 		});
 	}
 
+	let projectPatterns = {
+		'AirTables': Project,
+		'GoogleSheets': ProjectGSheets,
+	}
+
 	this.onMenu = function (callback) {
 		this.menuPath = this.basePath + this.key + "/list";
 		let dbRef1 = firebase.database().ref(this.menuPath);
@@ -53,8 +80,8 @@ function MngdUser(user) {
 				this.menuPath = "/sources/projects/" + record.val();
 				dbRef2 = firebase.database().ref(this.menuPath);
 				dbRef2.once('value').then(snap => {
-					let project = new Project(snap);
-					projects[project.name] = new Project(snap);
+					const project = new projectPatterns[snap.child('pattern').val()](snap);
+					projects[project.name] = project;
 					projectsLst.push(project)
 				}).then(() => callback(projectsLst));
 			});
