@@ -137,19 +137,49 @@ function gSheetsReadWorker(project, chartPlaceholders, rawData, callback) {
 		response => onError(response));
 }
 
+function GSheetsCtrRecord(record) {
+	this.id = record.findIndex(item => item === "ID");
+	this.name = record.findIndex(item => item === "Descrição");
+	this.start = record.findIndex(item => item === "Inicio");
+	this.duration = record.findIndex(item => item === "Duração");
+	this.end = record.findIndex(item => item === "Fim");
+	this.group = record.findIndex(item => item === "Grupo");
+	this.predecessor = record.findIndex(item => item === "Predecessor");
+	this.progress = record.findIndex(item => item === "Progresso");
+	this.ccp = record.findIndex(item => item === "CCP");
+	this.contingency = record.findIndex(item => item === "Contingência");
+	this.budget = record.findIndex(item => item === "Orçamento");
+	this.link = record.findIndex(item => item === "Link");
+
+	function RawDataRecord(record) {
+		this.id = record[this.id];
+		this.name = record[this.name];
+		this.start = record[this.start];
+		this.duration = record[this.duration];
+		this.end = record[this.end];
+		this.group = record[this.group];
+		this.predecessor = record[this.predecessor];
+		this.progress = record[this.progress];
+		this.ccp = record[this.ccp];
+		this.contingency = record[this.contingency];
+		this.budget = record[this.budget];
+		this.link = record[this.link];
+	}
+
+	function getFields(record) {
+		return new RawData(record);
+	}
+}
+
 function onResult(project, chartPlaceholders, rawData, callback, response) {
-	var range = response.result;
+	var range = response.result.values;
+	var rawData = [];
 	if (range.values.length > 0) {
-		for (i = 0; i < range.values.length; i++) {
-			var row = range.values[i];
-			console.log(row[0] + ', ' + row[4]);
-			with (rowData = "") {
-				for (j = 0; j < row.length; j++) {
-					rowData += row[j] + ',';
-				}
-				const rData = rowData.split(',')[0];
-				rawData.push(rData);
-			}
+		let rawRecord = new GSheetsCtrRecord(range.values[0]);
+		for (i = 1; i < range.values.length; i++) {
+			var row = rawRecord.getFields(range.values[i]);
+			console.log(row);
+			rawData.push(row);
 		}
 	} else {
 		console.log('No data found.');
