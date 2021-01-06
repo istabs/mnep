@@ -2,7 +2,12 @@ var projects = {};
 
 var rawData = [];
 
-function Project(snap) {
+let projectPatterns = {
+	'AirTables': ProjectAirTables,
+	'GoogleSheets': ProjectGSheets,
+}
+
+function ProjectAirTables(snap) {
 	this.name = snap.child('name').val();
 	this.pattern = snap.child('pattern').val();
 	this.authorization = snap.child('credentials').child('authorization').val();
@@ -64,11 +69,6 @@ function MngdUser(user) {
 		});
 	}
 
-	let projectPatterns = {
-		'AirTables': Project,
-		'GoogleSheets': ProjectGSheets,
-	}
-
 	this.onMenu = function (callback) {
 		this.menuPath = this.basePath + this.key + "/list";
 		let dbRef1 = firebase.database().ref(this.menuPath);
@@ -102,7 +102,11 @@ function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
 	});
 }
 
-function initClient(project, chartPlaceholders, acc, callback) {
+function bootstrapGSheets(project, chartPlaceholders, rawData, callback) {
+	gapi.load('client:auth2', () => initGSheets(project, chartPlaceholders, rawData, callback));
+}
+
+function initGSheets(project, chartPlaceholders, rawData, callback) {
 	gapi.client.init({
 		apiKey: project.apiKey,
 		clientId: project.clientId,
@@ -110,46 +114,53 @@ function initClient(project, chartPlaceholders, acc, callback) {
 		scope: project.scopes
 	}).then(function () {
 		gapi.auth2.getAuthInstance().isSignedIn.listen((isSignedIn) => {
-			updateSigninStatus(project, chartPlaceholders, acc, callback, isSignedIn);
+			updateGSheetsSigninStatus(project, chartPlaceholders, rawData, callback, isSignedIn);
 		});
 		let isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
-		updateSigninStatus(project, chartPlaceholders, acc, callback, isSignedIn);
+		updateGSheetsSigninStatus(project, chartPlaceholders, rawData, callback, isSignedIn);
 	}, function (error) {
 		console.log(JSON.stringify(error, null, 2));
 	});
 }
 
-var bootstrapGSheets = (project, chartPlaceholders, acc, callback) => {
-	gapi.load('client:auth2', () => initClient(project, chartPlaceholders, acc, callback));
+function updateGSheetsSigninStatus(project, chartPlaceholders, rawData, callback, isSignedIn) {
+	if (isSignedIn) gSheetsReadWorker(project, chartPlaceholders, rawData, callback);
+	else bootstrapGSheets(project, chartPlaceholders, rawData, callback);
 }
 
-function updateSigninStatus(project, chartPlaceholders, acc, callback, isSignedIn) {
-	if (isSignedIn) {
-		work(project, chartPlaceholders, rawData);
-	} else {
-		bootstrapGSheets(project, chartPlaceholders, acc, callback);
-	}
-}
-
-function work(project, chartPlaceholders, callback) {
+function gSheetsReadWorker(project, chartPlaceholders, rawData, callback) {
 	gapi.client.sheets.spreadsheets.values.get({
 		spreadsheetId: project.spreadsheetId,
 		range: project.table + '!' + project.range,
-	}).then(function (response) {
-		var range = response.result;
-		if (range.values.length > 0) {
-			for (i = 0; i < range.values.length; i++) {
-				var row = range.values[i];
-				console.log(row[0] + ', ' + row[4]);
-			}
-		} else {
-			console.log('No data found.');
-		}
-	}, function (response) {
-		console.log('Error: ' + response.result.error.message);
-	});
+	}).then(
+		(response) => onResult(project, chartPlaceholders, rawData, callback, response),
+		onError(response));
 }
 
-function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
-	bootstrapGSheets(project, chartPlaceholders, acc, callback);
+function onResult(project, chartPlaceholders, rawData, callback, response) {
+	var range = response.result;
+	if (range.values.length > 0) {
+		for (i = 0; i < range.values.length; i++) {
+			var row = range.values[i];
+			console.log(row[0] + ', ' + row[4]);
+			with (rowData = "") {
+				for (j = 0; j < row.length; j++) {
+					rowData += row[j] + ',';
+				}
+				const rData = rowData.split(',')[0];
+				rawData.push(rData);
+			}
+		}
+	} else {
+		console.log('No data found.');
+	}
+	callback(project, chartPlaceholders, rawData);
+}
+
+function onError(response) {
+	console.log('Error: ' + response.result.error.message);
+}
+
+function readGoogleSheetsData(project, chartPlaceholders, rawData, callback) {
+	bootstrapGSheets(project, chartPlaceholders, rawData, callback);
 }
