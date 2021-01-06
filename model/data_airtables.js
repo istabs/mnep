@@ -146,22 +146,6 @@ function updateSigninStatus(isSignedIn) {
 }
 
 /**
- *  Sign in the user upon button click.
- */
-function handleAuthClick(event) {
-	gapi.auth2.getAuthInstance().signIn();
-}
-
-/**
- *  Sign out the user upon button click.
- */
-/*
-function handleSignoutClick(event) {
-	gapi.auth2.getAuthInstance().signOut();
-}
-*/
-
-/**
  * Append a pre element to the body containing the given message
  * as its text node. Used to display the results of the API call.
  *
@@ -201,7 +185,8 @@ function listMajors() {
 
 function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 
-	handleClientLoad();
+	var curriedInitClient = initClient.curry(project, chartPlaceholders, acc);
+	gapi.load('client:auth2', curriedInitClient)
 
 	/*
 	$.ajax({
