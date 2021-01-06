@@ -108,7 +108,7 @@ function handleClientLoad() {
  *  Initializes the API client library and sets up sign-in state
  *  listeners.
  */
-function initClient() {
+function initClient(project, chartPlaceholders, acc) {
 	gapi.client.init({
 		apiKey: API_KEY,
 		clientId: CLIENT_ID,
@@ -185,8 +185,7 @@ function listMajors() {
 
 function readGoogleSheetsData(url, project, chartPlaceholders, acc, callback) {
 
-	var curriedInitClient = initClient.curry(project, chartPlaceholders, acc);
-	gapi.load('client:auth2', curriedInitClient)
+	gapi.load('client:auth2', () => initClient(project, chartPlaceholders, acc))
 
 	/*
 	$.ajax({
