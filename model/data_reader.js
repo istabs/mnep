@@ -214,7 +214,7 @@ class GSheetsCtrRecord {
 
 function onResult(project, chartPlaceholders, rawData, callback, response) {
 	var range = response.result.values;
-	var rawData = [];
+	rawData = [];
 	if (range.length > 0) {
 		let rawRecord = new GSheetsCtrRecord(range[0]);
 		for (i = 1; i < range.length; i++) {
