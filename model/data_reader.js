@@ -218,8 +218,7 @@ function onResult(project, chartPlaceholders, rawData, callback, response) {
 	if (range.length > 0) {
 		let rawRecord = new GSheetsCtrRecord(range[0]);
 		for (i = 1; i < range.length; i++) {
-			var row = rawRecord.parseRecord(range[i]);
-			console.log(row);
+			const row = rawRecord.parseRecord(range[i]);
 			rawData.push(row);
 		}
 	} else {
