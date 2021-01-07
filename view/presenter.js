@@ -108,16 +108,16 @@ function prepareGsheets(project, chartPlaceholders, rawData) {
 	rows = [];
 	rawData.sort((a, b) => Date.parse(a.Inicio) - Date.parse(b.Inicio)).forEach(item => {
 		if (! project.isSummarize || (project.isSummarize && project.summary && item.fields[project.summary])) {
-			let actvEnd = new Date(item.fields[project.end])
-			let progress = project.progress ? (item.fields[project.progress] ? item.fields[project.progress] : 0) : 0;
+			let actvEnd = new Date(item[project.end])
+			let progress = project.progress ? (item[project.progress] ? item[project.progress] : 0) : 0;
 			//let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
 			actvEnd.setDate(actvEnd.getDate() + 1)
-			if (item.fields[project.start] && item.fields[project.end]) {
+			if (item[project.start] && item[project.end]) {
 				rows.push([
 					item.id, // Task ID
-					item.fields[project.label], // Task Name
-					item.fields[project.group], // Group (string)
-					new Date(item.fields[project.start]), // Start Date
+					item[project.label], // Task Name
+					item[project.group], // Group (string)
+					new Date(item[project.start]), // Start Date
 					actvEnd, // End Date
 					0, // Duration (number)
 					progress, // Percent Complete (number)
