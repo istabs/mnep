@@ -212,7 +212,7 @@ class GSheetsCtrRecord {
 	}
 }
 
-function onResult(project, chartPlaceholders, rawData, callback, response) {
+function onResult(project, chartPlaceholders, _rawData, callback, response) {
 	var range = response.result.values;
 	rawData = [];
 	if (range.length > 0) {
