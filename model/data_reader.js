@@ -149,9 +149,7 @@ class GSheetsCtrRecord {
 		this.reci["group"] = record.findIndex(item => item === "Grupo");
 		this.reci["predecessor"] = record.findIndex(item => item === "Predecessor");
 		this.reci["progress"] = record.findIndex(item => item === "Progresso");
-		this.reci["ccp"] = record.findIndex(item => item === "CCP");
-		this.reci["contingency"] = record.findIndex(item => item === "Contingência");
-		this.reci["budget"] = record.findIndex(item => item === "Orçamento");
+		this.reci["isSummary"] = record.findIndex(item => item === "Sumário");
 		this.reci["link"] = record.findIndex(item => item === "Link");
 
 		this.reco = {};
@@ -163,10 +161,8 @@ class GSheetsCtrRecord {
 		this.reco["Grupo"] = record.findIndex(item => item === "Grupo");
 		this.reco["Predecessor"] = record.findIndex(item => item === "Predecessor");
 		this.reco["Progresso"] = record.findIndex(item => item === "Progresso");
-		this.reco["CCP"] = record.findIndex(item => item === "CCP");
-		this.reco["Contingência"] = record.findIndex(item => item === "Contingência");
-		this.reco["Orçamento"] = record.findIndex(item => item === "Orçamento");
-		this.reco["Link"] = record.findIndex(item => item === "Link");
+		this.reco["Sumário"] = record.findIndex(item => item === "Sumário");
+		this.reci["Link"] = record.findIndex(item => item === "Link");
 
 		this.recm = {};
 		this.recm["id"] = "ID";
@@ -177,9 +173,7 @@ class GSheetsCtrRecord {
 		this.recm["group"] = "Grupo";
 		this.recm["predecessor"] = "Predecessor";
 		this.recm["progress"] = "Progresso";
-		this.recm["ccp"] = "CCP";
-		this.recm["contingency"] = "Contingência";
-		this.recm["budget"] = "Orçamento";
+		this.recm["isSummary"] = "Sumário";
 		this.recm["link"] = "Link";
 
 		this.recr = {};
@@ -191,9 +185,7 @@ class GSheetsCtrRecord {
 		this.recr["Grupo"] = "group";
 		this.recr["Predecessor"] = "predecessor";
 		this.recr["Progresso"] = "progress";
-		this.recr["CCP"] = "ccp";
-		this.recr["Contingência"] = "contingency";
-		this.recr["Orçamento"] = "budget";
+		this.recr["Sumário"] = "isSummary";
 		this.recr["Link"] = "link";
 
 		this.recd = {};
@@ -205,9 +197,7 @@ class GSheetsCtrRecord {
 		this.recd["group"] = "group";
 		this.recd["predecessor"] = "predecessor";
 		this.recd["progress"] = "progress";
-		this.recd["ccp"] = "ccp";
-		this.recd["contingency"] = "contingency";
-		this.recd["budget"] = "budget";
+		this.recd["isSummary"] = "isSummary";
 		this.recd["link"] = "link";
 
 		this.parseRecord = function (record) {
