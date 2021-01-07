@@ -140,6 +140,8 @@ function gSheetsReadWorker(project, chartPlaceholders, rawData, callback) {
 class GSheetsCtrRecord {
 
 	constructor (record) {
+		this.row = ["id", "name", "group", "start", "end", "duration", "progress", "predecessor", "isSummary", "link",];
+
 		this.reci = {};
 		this.reci["id"] = record.findIndex(item => item === "ID");
 		this.reci["name"] = record.findIndex(item => item === "Descrição");
@@ -202,10 +204,8 @@ class GSheetsCtrRecord {
 
 		this.parseRecord = function (record) {
 			let parsedRecord = {};
-			Object.entries(this.reco).forEach(([key, value]) => {
-				console.log(key);
-				console.log(value);
-				parsedRecord[key] = record[value];
+			Object.entries(this.row).forEach(key => {
+				parsedRecord[key] = record[recm[key]];
 			});
 			return parsedRecord;
 		}
