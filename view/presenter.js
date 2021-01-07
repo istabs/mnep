@@ -107,10 +107,10 @@ function prepareAirtables(project, chartPlaceholders, rawData) {
 function prepareGsheets(project, chartPlaceholders, rawData) {
 	rows = [];
 	rawData.sort((a, b) => Date.parse(a.Inicio) - Date.parse(b.Inicio)).forEach(item => {
-		if (! project.isSummarize || (project.isSummarize && project.summary && item.fields[project.summary])) {
+		if (! project.isSummarize || (project.isSummarize && project.summary && item[project.summary])) {
 			let actvEnd = new Date(item[project.end])
 			let progress = project.progress ? (item[project.progress] ? item[project.progress] : 0) : 0;
-			//let preds = project.parent ? (item.fields[project.parent] ? item.fields[project.parent][0] : null) : null;
+			//let preds = project.parent ? (item[project.parent] ? item[project.parent][0] : null) : null;
 			actvEnd.setDate(actvEnd.getDate() + 1)
 			if (item[project.start] && item[project.end]) {
 				rows.push([
