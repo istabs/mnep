@@ -212,7 +212,7 @@ class GSheetsCtrRecord {
 
 		this.parseRecord = function (record) {
 			let parsedRecord = {};
-			for (i = 0; i < this.recm.length; i++) {
+			for (i = 0; i < Object.keys(this.reci).length; i++) {
 				parsedRecord[this.recd[i]] = record[this.reci[i]];
 			}
 			return parsedRecord;
