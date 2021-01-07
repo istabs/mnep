@@ -120,7 +120,7 @@ function prepareGsheets(project, chartPlaceholders, rawData) {
 					new Date(item['start']), // Start Date
 					actvEnd, // End Date
 					0, // Duration (number)
-					progress, // Percent Complete (number)
+					parseFloat(progress), // Percent Complete (number)
 					null, // Dependencies (string / comma separated)
 				]);
 			}
