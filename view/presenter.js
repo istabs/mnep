@@ -114,7 +114,7 @@ function prepareGsheets(project, chartPlaceholders, rawData) {
 			actvEnd.setDate(actvEnd.getDate() + 1)
 			if (item[project.start] && item[project.end]) {
 				rows.push([
-					item.id, // Task ID
+					item['ID'], // Task ID
 					item[project.label], // Task Name
 					item[project.group], // Group (string)
 					new Date(item[project.start]), // Start Date
