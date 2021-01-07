@@ -106,7 +106,7 @@ function prepareAirtables(project, chartPlaceholders, rawData) {
 
 function prepareGsheets(project, chartPlaceholders, rawData) {
 	rows = [];
-	rawData.sort((a, b) => Date.parse(a.Inicio) - Date.parse(b.Inicio)).forEach(item => {
+	rawData.sort((a, b) => Date.parse(a.start) - Date.parse(b.start)).forEach(item => {
 		if (! project.isSummarize || (project.isSummarize && project.summary && item[project.summary])) {
 			let actvEnd = new Date(item[project.end])
 			let progress = project.progress ? (item[project.progress] ? item[project.progress] : 0) : 0;
@@ -130,8 +130,11 @@ function prepareGsheets(project, chartPlaceholders, rawData) {
 		document.getElementById(chartPlaceholders.subtitle).textContent = "";
 		document.getElementById(chartPlaceholders.backBtn).style.display = "none";
 		presentGantt(chartPlaceholders,
-		{ gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
-		height: project.height * 42 + 50, width: 960 }, rawData, rows, project);
+		{
+			gantt: { criticalPathEnabled: true, criticalPathStyle: { stroke: '#e64a19', }, arrow: { radius: 10 } },
+			height: project.height * 42 + 50, width: 960
+		},
+		rawData, rows, project);
 	}
 	curriedPresentGantt();
 	/*
