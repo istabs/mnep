@@ -140,41 +140,78 @@ function gSheetsReadWorker(project, chartPlaceholders, rawData, callback) {
 class GSheetsCtrRecord {
 
 	constructor (record) {
-		this._id = record.findIndex(item => item === "ID");
-		this._name = record.findIndex(item => item === "Descrição");
-		this._start = record.findIndex(item => item === "Inicio");
-		this._duration = record.findIndex(item => item === "Duração");
-		this._end = record.findIndex(item => item === "Fim");
-		this._group = record.findIndex(item => item === "Grupo");
-		this._predecessor = record.findIndex(item => item === "Predecessor");
-		this._progress = record.findIndex(item => item === "Progresso");
-		this._ccp = record.findIndex(item => item === "CCP");
-		this._contingency = record.findIndex(item => item === "Contingência");
-		this._budget = record.findIndex(item => item === "Orçamento");
-		this._link = record.findIndex(item => item === "Link");
+		this.reci["id"] = record.findIndex(item => item === "ID");
+		this.reci["name"] = record.findIndex(item => item === "Descrição");
+		this.reci["start"] = record.findIndex(item => item === "Inicio");
+		this.reci["duration"] = record.findIndex(item => item === "Duração");
+		this.reci["end"] = record.findIndex(item => item === "Fim");
+		this.reci["group"] = record.findIndex(item => item === "Grupo");
+		this.reci["predecessor"] = record.findIndex(item => item === "Predecessor");
+		this.reci["progress"] = record.findIndex(item => item === "Progresso");
+		this.reci["ccp"] = record.findIndex(item => item === "CCP");
+		this.reci["contingency"] = record.findIndex(item => item === "Contingência");
+		this.reci["budget"] = record.findIndex(item => item === "Orçamento");
+		this.reci["link"] = record.findIndex(item => item === "Link");
+
+		this.reco["ID"] = record.findIndex(item => item === "ID");
+		this.reco["Descrição"] = record.findIndex(item => item === "Descrição");
+		this.reco["Inicio"] = record.findIndex(item => item === "Inicio");
+		this.reco["Duração"] = record.findIndex(item => item === "Duração");
+		this.reco["Fim"] = record.findIndex(item => item === "Fim");
+		this.reco["Grupo"] = record.findIndex(item => item === "Grupo");
+		this.reco["Predecessor"] = record.findIndex(item => item === "Predecessor");
+		this.reco["Progresso"] = record.findIndex(item => item === "Progresso");
+		this.reco["CCP"] = record.findIndex(item => item === "CCP");
+		this.reco["Contingência"] = record.findIndex(item => item === "Contingência");
+		this.reco["Orçamento"] = record.findIndex(item => item === "Orçamento");
+		this.reco["Link"] = record.findIndex(item => item === "Link");
+
+		this.recm["id"] = "ID";
+		this.recm["name"] = "Descrição";
+		this.recm["start"] = "Inicio";
+		this.recm["duration"] = "Duração";
+		this.recm["end"] = "Fim";
+		this.recm["group"] = "Grupo";
+		this.recm["predecessor"] = "Predecessor";
+		this.recm["progress"] = "Progresso";
+		this.recm["ccp"] = "CCP";
+		this.recm["contingency"] = "Contingência";
+		this.recm["budget"] = "Orçamento";
+		this.recm["link"] = "Link";
+
+		this.recr["ID"] = "id";
+		this.recr["Descrição"] = "name";
+		this.recr["Inicio"] = "start";
+		this.recr["Duração"] = "duration";
+		this.recr["Fim"] = "end";
+		this.recr["Grupo"] = "group";
+		this.recr["Predecessor"] = "predecessor";
+		this.recr["Progresso"] = "progress";
+		this.recr["CCP"] = "ccp";
+		this.recr["Contingência"] = "contingency";
+		this.recr["Orçamento"] = "budget";
+		this.recr["Link"] = "link";
+
+		this.recd["id"] = "id";
+		this.recd["name"] = "name";
+		this.recd["start"] = "start";
+		this.recd["duration"] = "duration";
+		this.recd["end"] = "end";
+		this.recd["group"] = "group";
+		this.recd["predecessor"] = "predecessor";
+		this.recd["progress"] = "progress";
+		this.recd["ccp"] = "ccp";
+		this.recd["contingency"] = "contingency";
+		this.recd["budget"] = "budget";
+		this.recd["link"] = "link";
 	}
 
-	static get RawDataRecord() {
-		return class RawDataRecord {
-			constructor (record) {
-				this.id = record[parent._id];
-				this.name = record[parent._name];
-				this.start = record[parent._start];
-				this.duration = record[parent._duration];
-				this.end = record[parent._end];
-				this.group = record[parent._group];
-				this.predecessor = record[parent._predecessor];
-				this.progress = record[parent._progress];
-				this.ccp = record[parent._ccp];
-				this.contingency = record[parent._contingency];
-				this.budget = record[parent._budget];
-				this.link = record[parent._link];
-			}
-		};
-	}
-
-	getFields = function (record) {
-		return new GSheetsCtrRecord.RawDataRecord(record);
+	parseRecord = function (record) {
+		let parsedRecord = {};
+		for (i = 0; i < this.recm.length; i++) {
+			parsedRecord[this.recd[i]] = record[this.reci[i]];
+		}
+		return parsedRecord;
 	}
 }
 
@@ -184,7 +221,7 @@ function onResult(project, chartPlaceholders, rawData, callback, response) {
 	if (range.length > 0) {
 		let rawRecord = new GSheetsCtrRecord(range[0]);
 		for (i = 1; i < range.length; i++) {
-			var row = rawRecord.getFields(range[i]);
+			var row = rawRecord.parseRecord(range[i]);
 			console.log(row);
 			rawData.push(row);
 		}
