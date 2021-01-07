@@ -140,6 +140,7 @@ function gSheetsReadWorker(project, chartPlaceholders, rawData, callback) {
 class GSheetsCtrRecord {
 
 	constructor (record) {
+		this.reci = {};
 		this.reci["id"] = record.findIndex(item => item === "ID");
 		this.reci["name"] = record.findIndex(item => item === "Descrição");
 		this.reci["start"] = record.findIndex(item => item === "Inicio");
@@ -153,6 +154,7 @@ class GSheetsCtrRecord {
 		this.reci["budget"] = record.findIndex(item => item === "Orçamento");
 		this.reci["link"] = record.findIndex(item => item === "Link");
 
+		this.reco = {};
 		this.reco["ID"] = record.findIndex(item => item === "ID");
 		this.reco["Descrição"] = record.findIndex(item => item === "Descrição");
 		this.reco["Inicio"] = record.findIndex(item => item === "Inicio");
@@ -166,6 +168,7 @@ class GSheetsCtrRecord {
 		this.reco["Orçamento"] = record.findIndex(item => item === "Orçamento");
 		this.reco["Link"] = record.findIndex(item => item === "Link");
 
+		this.recm = {};
 		this.recm["id"] = "ID";
 		this.recm["name"] = "Descrição";
 		this.recm["start"] = "Inicio";
@@ -179,6 +182,7 @@ class GSheetsCtrRecord {
 		this.recm["budget"] = "Orçamento";
 		this.recm["link"] = "Link";
 
+		this.recr = {};
 		this.recr["ID"] = "id";
 		this.recr["Descrição"] = "name";
 		this.recr["Inicio"] = "start";
@@ -192,6 +196,7 @@ class GSheetsCtrRecord {
 		this.recr["Orçamento"] = "budget";
 		this.recr["Link"] = "link";
 
+		this.recd = {};
 		this.recd["id"] = "id";
 		this.recd["name"] = "name";
 		this.recd["start"] = "start";
