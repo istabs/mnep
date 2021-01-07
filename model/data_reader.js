@@ -174,7 +174,7 @@ class GSheetsCtrRecord {
 	}
 
 	getFields = function (record) {
-		return new RawDataRecord(record);
+		return new GSheetsCtrRecord.RawDataRecord(record);
 	}
 }
 
