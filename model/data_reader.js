@@ -209,14 +209,14 @@ class GSheetsCtrRecord {
 		this.recd["contingency"] = "contingency";
 		this.recd["budget"] = "budget";
 		this.recd["link"] = "link";
-	}
 
-	parseRecord = function (record) {
-		let parsedRecord = {};
-		for (i = 0; i < this.recm.length; i++) {
-			parsedRecord[this.recd[i]] = record[this.reci[i]];
+		this.parseRecord = function (record) {
+			let parsedRecord = {};
+			for (i = 0; i < this.recm.length; i++) {
+				parsedRecord[this.recd[i]] = record[this.reci[i]];
+			}
+			return parsedRecord;
 		}
-		return parsedRecord;
 	}
 }
 
