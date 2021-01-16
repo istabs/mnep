@@ -181,22 +181,23 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
 }
 
-function airtablesCommon(project, chartPlaceholders, url) {
+function airtablesCommon(project, chartPlaceholders, url, parameters) {
 	document.getElementById(chartPlaceholders.chart).innerHTML = "";
 	document.getElementById(chartPlaceholders.title).textContent = project.name;
 	document.getElementById(chartPlaceholders.subtitle).textContent = "";
 	document.getElementById(chartPlaceholders.backBtn).style.display = "none";
-	readAirtablesData(url, project, chartPlaceholders, rawData, prepareAirtables);
+	readAirtablesData(url, parameters, project, chartPlaceholders, rawData, prepareAirtables);
 }
 
 function airtables1(project, chartPlaceholders) {
 	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
-	airtablesCommon(project, chartPlaceholders, url);
+	airtablesCommon(project, chartPlaceholders, url, {});
 }
 
 function airtables2(project, chartPlaceholders) {
 	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
-	airtablesCommon(project, chartPlaceholders, url);
+	let data = project.view ? { data: project.view } : {}
+	airtablesCommon(project, chartPlaceholders, url, data);
 }
 
 function gsheets1(project, chartPlaceholders) {
