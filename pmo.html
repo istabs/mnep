@@ -45,7 +45,7 @@
 <script type="text/javascript">
 
 	function fillChart(project, chartPlaceholders) {
-		if (!projects.contains(project)) {
+		if (!projects.keys().contains(project)) {
 			return;
 		}
 		let prjDetails = projects[project];
