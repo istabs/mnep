@@ -89,6 +89,8 @@ function MngdUser(user) {
 }
 
 function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
+	let url1 = url.origin + url.pathname;
+	let entries = url.searchParams.entries();
 	$.ajax({
 		url: url.origin + url.pathname,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),

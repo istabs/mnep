@@ -196,7 +196,7 @@ function airtables1(project, chartPlaceholders) {
 
 function airtables2(project, chartPlaceholders) {
 	let url = new URL("/v0/" + project.key + "/" + project.table, "https://api.airtable.com");
-	if (project.view) url.searchParams.append("data", project.view);
+	if (project.view) url.searchParams.append("view", project.view);
 	airtablesCommon(project, chartPlaceholders, url);
 }
 
