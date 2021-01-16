@@ -97,7 +97,7 @@ function readAirtablesData(url, parameters, project, chartPlaceholders, acc, cal
 		success: (rawData) => {
 			rawData.records.forEach(record => acc.push(record))
 			if (rawData.offset) {
-				parameters[offset] = rawData.offset;
+				parameters["offset"] = rawData.offset;
 				readAirtablesData(url, parameters, project, chartPlaceholders, acc, callback);
 				return;
 			}
