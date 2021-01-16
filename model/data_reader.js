@@ -24,6 +24,7 @@ function ProjectAirTables(snap) {
 	this.link = snap.child('details').child('mapping').child('link').val();
 	this.height = snap.child('details').child('height').val();
 	this.isSummarize = snap.child('details').child('isSummarize').val();
+	this.view  = snap.child('details').child('view').val();
 }
 
 function ProjectGSheets(snap) {
