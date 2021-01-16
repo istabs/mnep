@@ -45,6 +45,9 @@
 <script type="text/javascript">
 
 	function fillChart(project, chartPlaceholders) {
+		if (!projects.contains(project)) {
+			return;
+		}
 		let prjDetails = projects[project];
 		let prjType = prjDetails.pattern + ":" + prjDetails.maptype
 		if (parsers.hasOwnProperty(prjType)) {
