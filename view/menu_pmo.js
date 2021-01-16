@@ -6,7 +6,6 @@ function menuChoice(project, marshaledChartPlaceholders) {
 function completeMenu(projectsLst, chartPlaceholders, dropdownTag) {
 	let dropdownLinks = "";
 	projectsLst.forEach(project => {
-		let prjName = project.name;
 		placeholdersMarshal = escapeHtml(JSON.stringify(chartPlaceholders));
 		dropdownLinks += "<a class='dropdown-item' href='#' onclick=\"menuChoice('" + project.name + "','"
 		+ placeholdersMarshal + "')\">" + project.name + "</a>"
@@ -19,12 +18,17 @@ function handleSignedInUser(user) {
 	document.getElementById('user-id').style.display = 'block';
 	document.getElementById('user-id').textContent = user.displayName;
 	if (user.photoURL) {
-		var photoURL = user.photoURL;
+		let photoURL = new URL(user.photoURL);
+		if (['googleusercontent.com', 'ggpht.com'].includes(photoURL.hostname)) {
+			photoURL.searchParams.append('sz', '40');
+		}
+/*		var photoURL = user.photoURL;
 		if ((photoURL.indexOf('googleusercontent.com') != -1) ||
 			(photoURL.indexOf('ggpht.com') != -1)) {
-			photoURL = photoURL + '?sz=' + '40';
+			photoURL.searchParams.append('sz', '40');
 		}
-		document.getElementById('photo').src = photoURL;
+*/
+		document.getElementById('photo').src = photoURL.href;
 		document.getElementById('photo').style.display = 'block';
 	} else {
 		document.getElementById('photo').style.display = 'none';
