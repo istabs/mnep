@@ -186,7 +186,6 @@ function airtablesCommon(project, chartPlaceholders, url) {
 	document.getElementById(chartPlaceholders.title).textContent = project.name;
 	document.getElementById(chartPlaceholders.subtitle).textContent = "";
 	document.getElementById(chartPlaceholders.backBtn).style.display = "none";
-	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
 	readAirtablesData(url, project, chartPlaceholders, rawData, prepareAirtables);
 }
 
