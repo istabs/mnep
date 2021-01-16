@@ -6,7 +6,7 @@ function synchMenu(status) {
 	document.getElementById('canvas_name').style.display = status;
 }
 
-var handleSignedInUser = function (user) {
+function handleSignedInUser(user) {
 	document.getElementById('firebaseui-auth-container').style.display = 'none';
 	with(status = 'block') {
 		document.getElementById('user-id').textContent = user.displayName;
