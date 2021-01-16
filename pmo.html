@@ -45,9 +45,7 @@
 <script type="text/javascript">
 
 	function fillChart(project, chartPlaceholders) {
-		let x = projects[project];
-		let y = project in projects;
-		if (!( project in projects)) {
+		if (!(project in projects)) {
 			return;
 		}
 		let prjDetails = projects[project];
