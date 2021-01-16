@@ -90,10 +90,10 @@ function MngdUser(user) {
 
 function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
 	$.ajax({
-		url: url.href,
+		url: url.origin + url.pathname,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
 		type: "get",
-		data: url.searchParams,
+		data: url.searchParams.entries,
 		success: (rawData) => {
 			rawData.records.forEach(record => acc.push(record))
 			if (rawData.offset) {
