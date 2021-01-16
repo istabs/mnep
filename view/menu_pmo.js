@@ -22,12 +22,6 @@ function handleSignedInUser(user) {
 		if (['googleusercontent.com', 'ggpht.com'].includes(photoURL.hostname)) {
 			photoURL.searchParams.append('sz', '40');
 		}
-/*		var photoURL = user.photoURL;
-		if ((photoURL.indexOf('googleusercontent.com') != -1) ||
-			(photoURL.indexOf('ggpht.com') != -1)) {
-			photoURL.searchParams.append('sz', '40');
-		}
-*/
 		document.getElementById('photo').src = photoURL.href;
 		document.getElementById('photo').style.display = 'block';
 	} else {

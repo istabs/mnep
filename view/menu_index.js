@@ -6,14 +6,12 @@ function synchMenu(status) {
 	document.getElementById('canvas_name').style.display = status;
 }
 
-function handleSignedInUser(user) {
+function handleSignedInUser() {
 	document.getElementById('firebaseui-auth-container').style.display = 'none';
 	with(status = 'block') {
 		document.getElementById('user-id').textContent = user.displayName;
 		document.getElementById('canvas_name').textContent = user.displayName;
 		if (user.photoURL) {
-			var photoURL = user.photoURL;
-			var canvasPhotoURL = user.photoURL;
 			if ((photoURL.indexOf('googleusercontent.com') != -1) ||
 				(photoURL.indexOf('ggpht.com') != -1)) {
 				canvasPhotoURL = photoURL;

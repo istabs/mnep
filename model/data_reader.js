@@ -88,12 +88,12 @@ function MngdUser(user) {
 	}
 }
 
-function readAirtablesData(url, parameters, project, chartPlaceholders, acc, callback) {
+function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
 	$.ajax({
-		url: url,
+		url: url.href,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
 		type: "get",
-		data: parameters,
+		data: url.searchParams,
 		success: (rawData) => {
 			rawData.records.forEach(record => acc.push(record))
 			if (rawData.offset) {

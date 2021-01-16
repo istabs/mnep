@@ -181,23 +181,23 @@ function prepareAirtablesDetails(project, chartPlaceholders, rawData, id, rule) 
 		height: project.height * 42 + 40, width: 960 }, rawData, rows, project);
 }
 
-function airtablesCommon(project, chartPlaceholders, url, parameters) {
+function airtablesCommon(project, chartPlaceholders, url) {
 	document.getElementById(chartPlaceholders.chart).innerHTML = "";
 	document.getElementById(chartPlaceholders.title).textContent = project.name;
 	document.getElementById(chartPlaceholders.subtitle).textContent = "";
 	document.getElementById(chartPlaceholders.backBtn).style.display = "none";
-	readAirtablesData(url, parameters, project, chartPlaceholders, rawData, prepareAirtables);
+	readAirtablesData(url, project, chartPlaceholders, rawData, prepareAirtables);
 }
 
 function airtables1(project, chartPlaceholders) {
-	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
-	airtablesCommon(project, chartPlaceholders, url, {});
+	let url = new URL("/v0/" + project.key + "/" + project.table, "https://api.airtable.com");
+	airtablesCommon(project, chartPlaceholders, url);
 }
 
 function airtables2(project, chartPlaceholders) {
-	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
-	let data = project.view ? { data: project.view } : {}
-	airtablesCommon(project, chartPlaceholders, url, data);
+	let url = new URL("/v0/" + project.key + "/" + project.table, "https://api.airtable.com");
+	if (project.view) url.searchParams.append("data", project.view);
+	airtablesCommon(project, chartPlaceholders, url);
 }
 
 function gsheets1(project, chartPlaceholders) {
