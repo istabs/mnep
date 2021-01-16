@@ -88,14 +88,22 @@ function MngdUser(user) {
 	}
 }
 
+function urlParamsToObject(entries) {
+	const result = {}
+	for(const [key, value] of entries) { // each 'entry' is a [key, value] tupple
+	  result[key] = value;
+	}
+	return result;
+}
+
 function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
 	let url1 = url.origin + url.pathname;
-	let entries = url.searchParams.entries();
+	let entries = urlParamsToObject(url.searchParams);
 	$.ajax({
 		url: url.origin + url.pathname,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
 		type: "get",
-		data: url.searchParams.entries(),
+		data: urlParamsToObject(url.searchParams),
 		success: (rawData) => {
 			rawData.records.forEach(record => acc.push(record))
 			if (rawData.offset) {
