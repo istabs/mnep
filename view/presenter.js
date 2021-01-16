@@ -195,7 +195,7 @@ function airtables1(project, chartPlaceholders) {
 }
 
 function airtables2(project, chartPlaceholders) {
-	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table + "?view=Contratação";
+	let url = "https://api.airtable.com/v0/" + project.key + "/" + project.table;
 	airtablesCommon(project, chartPlaceholders, url);
 }
 

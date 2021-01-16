@@ -89,9 +89,12 @@ function MngdUser(user) {
 }
 
 function readAirtablesData(url, project, chartPlaceholders, acc, callback) {
+	var ajv = (url.includes("PMO")) ? { view: "Contratação" } : {};
 	$.ajax({
 		url: url,
 		beforeSend: (xhr) => xhr.setRequestHeader("Authorization", project.authorization),
+		type: "get",
+		data: ajv,
 		success: (rawData) => {
 			rawData.records.forEach(record => acc.push(record))
 			if (rawData.offset) {
