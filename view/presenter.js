@@ -43,7 +43,9 @@ function presentGantt(chartPlaceholders,
 	// setup for bars click
 	google.visualization.events.addListener(chart, 'select',
 		e => {
-			let r = chart.getSelection();
+			if (chart.getSelection().length == 0) {
+				return;
+			};
 			var id = ids[chart.getSelection()[0].row];
 			if (resources[id] && project.link && resources[id].fields[project.link]) {
 					placeholdersMarshal = JSON.stringify(chartPlaceholders);
